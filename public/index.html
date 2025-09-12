@@ -8,7 +8,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 <style>
   #container{
-    width: 480px;
+    width: 960px;
     margin: 0 auto;
   }
 </style>
@@ -16,10 +16,25 @@
 <body>
   <div id="container">
     <h3>loop, method, event</h3>
+    값1: <input type="text" id="n1" value="0">
+    <select id="op" onchange="cal()">
+      <option value="+" >+</option>
+      <option value="-" selected>-</option>
+      <option value="*">*</option>
+      <option value="/">/</option>
+    </select>
+    값2: <input type="text" id="n2" value="0">
+    결과: <input type="text" id="res" value="0" readonly>
   </div>
   <!-- <script src="./js/2nd/for.js"></script> -->
   <!-- <script src="./js/2nd/for2.js"></script> -->
   <!-- <script src="./js/2nd/while.js"></script> -->
-  <script src="./js/2nd/while2.js"></script>
+  <!-- <script src="./js/2nd/while2.js"></script> -->
+  <!-- <script src="./js/2nd/function.js"></script> -->
+  <!-- <script src="./js/2nd/function2.js"></script> -->
+  <!-- <script src="./js/2nd/function3.js"></script> -->
+  <script src="./js/2nd/todo3.js">
+    document.getElementById("op").dispatchEvent(new Event("change"));
+  </script>
 </body>
 </html>
