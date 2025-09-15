@@ -121,6 +121,8 @@ function RemoveRow(e) {
   console.log("현재 행(tr)의 인덱스: " + trIndex);
 
   e.target.parentElement.parentElement.remove();
+  e.stopPropagation();
+  std.splice(trIndex, 1);
   // e.parentElement.
 }
 

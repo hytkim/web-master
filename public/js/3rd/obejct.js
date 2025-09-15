@@ -160,6 +160,7 @@ function CreateList() {
 CreateList2();
 
 function makeTr(newStds) {
+  console.log(newStds);
   let tr = document.createElement('tr'); // <tr> </tr>
 
   for (let prop in newStds) {
@@ -209,14 +210,18 @@ function CreateList2() {
     }
     // console.log(stds[stds.length - 1]);
     console.log(newStd);
-    let tr = document.createElement('tr');
+    let tr = document.createElement('tr'); // <tr></tr>
     for (let prop in newStd) {
-      let td = document.createElement('td');
+      let td = document.createElement('td'); // <td></td>
       td.innerHTML = newStd[prop];
       tr.appendChild(td);
     }
-    let td = document.createElement('td');
-    let btn = document.createElement('button');
+    //<tr> <td> newStd.prop[0] </td> </tr>
+    //<tr> <td> newStd.prop[1] </td> </tr>
+    //<tr> <td> newStd.prop[2] </td> </tr>
+
+    let td = document.createElement('td'); // <td></td>
+    let btn = document.createElement('button'); // <button></button>
     btn.innerHTML = '삭제';
     //btn btn-danger <== 부트스트랩 스타일시트로 받아온 빨간버튼 css
     btn.setAttribute('class', 'btn btn-danger'); // <button class="btn btn-danger">
@@ -224,10 +229,15 @@ function CreateList2() {
       console.log(e);
       e.target.parentElement.parentElement.remove();
     });
-    td.appendChild(btn);
+    td.appendChild(btn); // <td> <button></button> </td>
 
     document.querySelector('#list tbody').appendChild(tr);
     tr.appendChild(td);
+    //<tr> <td> newStd.prop[0] </td> </tr>
+    //<tr> <td> newStd.prop[1] </td> </tr>
+    //<tr> <td> newStd.prop[2] </td> </tr>
+    //<tr> <td> <button>삭제</button> </td> </tr>
+
     document.querySelector('#stNum').value = '';
     document.querySelector('#stName').value = '';
     document.querySelector('#stScore').value = '';
