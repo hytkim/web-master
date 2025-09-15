@@ -154,10 +154,8 @@ document.querySelector('.addBtn')
     // let sna = document.querySelector('#stName').value;
     let sco = document.querySelector('#stScore').value;
 
-
     for (let i = 0; i < nodeList.length; i++) {
       //console.dir(nodeList[i]); // 이거 한글이랑 같이쓰면 tr이아니라 이상한걸로잡힘
-
       console.log(nodeList[i].children[0], '-', sno);
 
       if (nodeList[i].children[0].innerHTML == sno) {

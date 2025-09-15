@@ -13,7 +13,13 @@
   <style>
     #container {
       width: 960px;
-      margin: 0 auto;
+      margin: 0 auto;;
+    }
+    .table tr td{
+      border: 1px solid #ccc;
+    }
+    .table tr{
+      border: 1px solid red;
     }
   </style>
 </head>
@@ -22,6 +28,7 @@
   <div id="container">
     <h3>2nd: loop, method</h3>
     <h3>3rd: event, DOM</h3>
+    <hr>
     <div id="std">
       <table class="table">
         <tbody>
@@ -41,7 +48,7 @@
             <th>
               <td>
                 <button id="addBtn" class="btn1" onclick="">Clicked id</button>
-                <button class="addBtn btn2" onclick="">Clicked class</button>              
+                <button class="addBtn btn2" onclick="">Clicked class</button>
             </th>
           </tr>
         </tbody>
@@ -61,8 +68,9 @@
         </tbody>
       </table>
     </div>
-    <script src="3rd/event.js"></script>
+    <!-- <script src="3rd/event.js"></script> -->
     <!-- <script src="3rd/array.js"></script> -->
+     <script src="3rd/obejct.js"></script>
 </body>
 
 </html>
