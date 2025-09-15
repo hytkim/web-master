@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3-Day</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous">
+  </script>
+  <style>
+    #container {
+      width: 960px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <h3>2nd: loop, method</h3>
+    <h3>3rd: event, DOM</h3>
+    <div id="std">
+      <table class="table">
+        <tbody>
+          <tr>
+            <th>stNum</th>
+            <td><input id="stNum"></td>
+          </tr>
+          <tr>
+            <th>stName</th>
+            <td><input id="stName"></td>
+          </tr>
+          <tr>
+            <th>stScore</th>
+            <td><input type="number" id="stScore"></td>
+          </tr>
+          <tr>
+            <th>
+              <td>
+                <button id="addBtn" class="btn1" onclick="">Clicked id</button>
+                <button class="addBtn btn2" onclick="">Clicked class</button>              
+            </th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div id="list">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>학번</th>
+            <th>이름</th>
+            <th>점수</th>
+            <th>삭제</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+    <script src="3rd/event.js"></script>
+    <!-- <script src="3rd/array.js"></script> -->
+</body>
+
+</html>
