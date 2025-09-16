@@ -4,74 +4,89 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>3-Day</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous">
-  </script>
+  <title>aryMethod, forEach(Function)</title>
   <style>
-    #container {
-      width: 960px;
-      margin: 0 auto;;
+    table {
+      text-align: center;
+      width: 100vw;
     }
-    .table tr td{
-      border: 1px solid #ccc;
+
+    td {
+      width: 30px;
+      height: 30px;
     }
-    .table tr{
-      border: 1px solid red;
+
+    .saturday {
+      background-color: blue;
+      color: aliceblue;
+    }
+
+    .sunday {
+      background-color: crimson;
+      color: aliceblue;
+    }
+
+    .holyday {
+      background-color: goldenrod;
+      color: crimson;
+    }
+
+    .outer {
+      width: 100%;
+      height: 600px;
+      background-color: yellow;
+    }
+
+    .outer>.inner {
+      display: inline-block;
+      width: 90px;
+      height: 30px;
+      background-color: aqua;
+      color: red;
+      margin: 2px;
+      text-align: center;
+      line-height: 30px;
     }
   </style>
 </head>
 
 <body>
-  <div id="container">
-    <h3>2nd: loop, method</h3>
-    <h3>3rd: event, DOM</h3>
-    <hr>
-    <div id="std">
-      <table class="table">
-        <tbody>
-          <tr>
-            <th>stNum</th>
-            <td><input id="stNum"></td>
-          </tr>
-          <tr>
-            <th>stName</th>
-            <td><input id="stName"></td>
-          </tr>
-          <tr>
-            <th>stScore</th>
-            <td><input type="number" id="stScore"></td>
-          </tr>
-          <tr>
-            <th>
-              <td>
-                <button id="addBtn" class="btn1" onclick="">Clicked id</button>
-                <button class="addBtn btn2" onclick="">Clicked class</button>
-            </th>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div id="list">
-      <table class="table">
-        <thead>
-          <tr>
-            <th>학번</th>
-            <th>이름</th>
-            <th>점수</th>
-            <th>삭제</th>
-          </tr>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
-    </div>
-    <!-- <script src="3rd/event.js"></script> -->
-    <!-- <script src="3rd/array.js"></script> -->
-    <!-- <script src="3rd/obejct.js"></script> -->
-     <script src="3rd/jasoop.js"></script>
+  <h3>배열, 메소드</h3>
+  <table border="2">
+    <thead>
+      <tr>
+        <th>일</th>
+        <th>월</th>
+        <th>화</th>
+        <th>수</th>
+        <th>목</th>
+        <th>금</th>
+        <th>토</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- <tr>
+        <td>1</td>
+        <td>2</td>
+        <td>3</td>
+        <td>4</td>
+        <td>5</td>
+        <td>6</td>
+        <td>7</td>
+      </tr> -->
+    </tbody>
+  </table>
+  <input type="text" id="user_value">
+  <button id="search_word" onclick="">찾기</button>
+  <div class="outer">
+  </div>
+  <!-- <script src="4th/array.js"></script> -->
+  <!-- <script src="4th/array2.js"></script> -->
+  <!-- <script src="4th/data.js"></script> -->
+  <!-- <script src="4th/array3.js"></script> -->
+  <!-- <script src="4th/date.js"></script> -->
+  <script src="4th/calendar.js"></script>
+  <script src="4th/setInteval.js"></script>
 </body>
 
 </html>
