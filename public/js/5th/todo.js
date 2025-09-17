@@ -77,6 +77,11 @@ const Star = (line) => {
 // unStar(5);
 
 
+// *****
+//  ****
+//   ***
+//    **
+//     *
 const unStarRe = (line) => {
   // 아래로 5줄 내려가겠다.
   let li = line;
@@ -85,15 +90,12 @@ const unStarRe = (line) => {
     let str = ``;
     //오른쪽으로 5개찍고 하나씩깎아먹겠다.
     for (let j = li; j > 0; j--) {
-      blank += ``;
+      blank += `*`;
     }
     li--;
-    if (blank.length < line) {
-      for (let st = 0; st < line - blank; st++) {
-        blank += `*`;
-      }
+    for (let j = 0; j < line-li; j++) {
+      blank = ' '+blank;
     }
-
     console.log(blank);
   }
 }
