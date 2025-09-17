@@ -1,5 +1,4 @@
-// data.js
-const json = `[{"id":1,"first_name":"Jerald","last_name":"Mazella","email":"jmazella0@deviantart.com","gender":"Male","salary":4338},
+[{"id":1,"first_name":"Jerald","last_name":"Mazella","email":"jmazella0@deviantart.com","gender":"Male","salary":4338},
 {"id":2,"first_name":"Marlie","last_name":"Aldersley","email":"maldersley1@cpanel.net","gender":"Female","salary":9141},
 {"id":3,"first_name":"Ulrike","last_name":"Callis","email":"ucallis2@examiner.com","gender":"Female","salary":6176},
 {"id":4,"first_name":"Bel","last_name":"Andreassen","email":"bandreassen3@utexas.edu","gender":"Female","salary":5005},
@@ -13,10 +12,4 @@ const json = `[{"id":1,"first_name":"Jerald","last_name":"Mazella","email":"jmaz
 {"id":12,"first_name":"Duane","last_name":"Demangeon","email":"ddemangeonb@hubpages.com","gender":"Male","salary":5016},
 {"id":13,"first_name":"Kermie","last_name":"Cockett","email":"kcockettc@reuters.com","gender":"Male","salary":9961},
 {"id":14,"first_name":"Aluin","last_name":"Robertsson","email":"arobertssond@eventbrite.com","gender":"Male","salary":4688},
-{"id":15,"first_name":"Franz","last_name":"Delagua","email":"fdelaguae@sun.com","gender":"Male","salary":4515}]`;
-
-// 문자열을 파싱(변환)해서 배열객체 data로 변환해줌
-const data = JSON.parse(json);
-// console.log(data);
-// const jsonObj = JSON.stringify(data);
-// console.log(jsonObj);
+{"id":15,"first_name":"Franz","last_name":"Delagua","email":"fdelaguae@sun.com","gender":"Male","salary":4515}]
