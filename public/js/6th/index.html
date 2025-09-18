@@ -5,12 +5,74 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>6th</title>
 <style>
+    table {
+      text-align: center;
+      width: 90vw;
+      margin: 0 auto;
+    }
 
-</style>
+    td {
+      width: 30px;
+      height: 30px;
+    }
+
+    .saturday {
+      background-color: blue;
+      color: aliceblue;
+    }
+
+    .sunday {
+      background-color: crimson;
+      color: aliceblue;
+    }
+
+    .holyday {
+      background-color: goldenrod;
+      color: crimson;
+    }
+
+    .outer {
+      width: 100%;
+      height: 600px;
+      background-color: yellow;
+    }
+
+    .outer>.inner {
+      display: inline-block;
+      width: 90px;
+      height: 30px;
+      background-color: aqua;
+      color: red;
+      margin: 2px;
+      text-align: center;
+      line-height: 30px;
+    }
+  </style>
 </head>
 <body>
-
+  <div id="container">
+    <table border="2">
+      <thead>
+        <tr>
+          <th>사번</th>
+          <th>이름</th>
+          <th>급여</th>
+        </tr>
+      </thead>
+      <tbody id="list">
+        <!-- <tr>
+          <td>1</td>
+          <td>2</td>
+          <td>3</td>
+        </tr> -->
+      </tbody>
+    </table>
+  </div>
   <!-- <script src="string.js"></script> -->
-  <script src="destructuring.js"></script>
+  <!-- <script src="destructuring.js"></script> -->
+  <!-- <script src="for.js"></script> -->
+  <script src="ary.js"></script>
+  <script src="ary2.js"></script>
+  <script src="ary3.js"></script>
 </body>
 </html>
