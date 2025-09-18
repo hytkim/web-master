@@ -19,7 +19,7 @@ function addPost() {
   }));
   // ↓↓ 로드이벤트 발생시 함수 실행 ↓↓
   x.onload = function () {
-    // 이게대체뭐임
+    // 이게대체뭐임? 이게어떻게 한줄만반환하는거임?
     let res = JSON.parse(x.response); console.log(res);
 
     // 생성된 행을 콘테이너에 추가

@@ -53,9 +53,9 @@ document.querySelector('#search_word')
 
 // 웹브라우저가 가진 내장함수 setInteval(function() {}, time): function(){}을 1/1000 * time 단위로 반복실행한다.(1000이면 1초임)
 // setInterval(function() { console.log(new Date()); }, 1000);
+let tm = document.querySelector(`#Time`);
 setInterval(function () {
   console.log(timing--);
-
   if (timing == 0) {
     if (document.querySelectorAll('div.inner').length > 0) {
       alert('!!!!!!실패!!!!!');
@@ -67,6 +67,7 @@ setInterval(function () {
       Refreshi();
     }
   }
+  tm.innerHTML = timing+`초`;
 }, 1000);
 
 
