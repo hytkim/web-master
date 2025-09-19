@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+  <h1>수정 화면</h1>
+  <div class="addStudent">
+    <form name="stdForm" action="#" method="post">
+      <label for="sno">학생번호
+        <input type="text" id="sno" disabled>
+      </label>
+      <!-- <input type="text" id="sno"> -->
+      <br>
+      <label for="sname">이름
+        <input type="text" id="sname">
+      </label>
+      <br>
+      <label for="score">점수
+        <input type="text" id="score">
+      </label>
+      <br>
+      <input type="submit" value="저장" />
+    </form>
+  </div>
+  <script>
+    let sno = JSON.parse(localStorage.getItem("search"));
+    if (!sno) {
+      alert('비정상적인 접근');
+      location.href = 'index.html';
+    } else {
+      let data = JSON.parse(localStorage.getItem("students"));
+      res = data.filter((item) => item.sno == sno)[0];
+      console.log(res);
+
+      let fields = ['sno', 'sname', 'score'];
+      for (const prop of fields) {
+        document.getElementById(`${prop}`).value = res[prop];
+      }
+      document.forms.stdForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        let changedName = document.getElementById('sname').value;
+        let changedScore = document.getElementById('score').value;
+
+        if (!changedName || !changedScore) {
+          alert('값을 입력 해 주세용');
+          return;
+        }
+
+        data.forEach((item) => {
+          if (item.sno == sno) {
+            item.sname = changedName;
+            item.score = changedScore;
+          }
+        });
+        localStorage.setItem('students', JSON.stringify(data));
+        localStorage.removeItem('search');
+        location.href = 'index.html';
+      });
+    }
+  </script>
+  <!-- document.getElementById('sno'); -->
+  <!-- document.getElementById('sname'); -->
+  <!-- document.getElementById('score'); -->
+</body>
+
+</html>

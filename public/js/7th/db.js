@@ -70,15 +70,7 @@ MakeRow = (post_object) => {
     console.log(`who is target: ${e.target.parentElement}`);
     console.log(`who is target: ${e.target.parentElement.parentElement}`);
     console.log(`who is target: ${e.target.parentElement.parentElement.children[0].innerHTML}`);
-
-    fetch(`http://localhost:3000/post/${e.target.parentElement.parentElement.children[0].innerHTML}`, {
-      method: "delete",
-      headers: {"Content-Type": "application/json;charset=utf-8"},
-    })
-    // .then((response) => {console.log(`resqponse: ${response}`)})
-    .catch((err) => {
-      console.log(`btn Delete request Error!: ${err}`);
-    })
+    DeleteDB(e.target.parentElement.parentElement.children[0].innerHTML);
 
     e.target.parentElement.parentElement.remove();
   });
@@ -86,6 +78,18 @@ MakeRow = (post_object) => {
   div.appendChild(span);
   return div;
 }
+
+DeleteDB = (boardIndex) => {
+  fetch(`http://localhost:3000/post/${boardIndex}`, {
+      method: "delete",
+      headers: {"Content-Type": "application/json;charset=utf-8"},
+    })
+    // .then((response) => {console.log(`resqponse: ${response}`)})
+    .catch((err) => {
+      console.log(`btn Delete request Error!: ${err}`);
+    })
+}
+
 /* backup - code*/
 backup_then_result = () =>{
   // 3가지 방법으로 동작가능함
