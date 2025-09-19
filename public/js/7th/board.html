@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>7th - board.html</title>
+  <!DOCTYPE html>
+  <html lang="ko">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5th - board.html</title>
+    <style>
+    /* --- 기본 & 레이아웃 스타일 --- */
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      background-color: #f4f7fc;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* --- 입력 폼 스타일 --- */
+    form {
+      display: flex;
+      gap: 10px; /* 요소 사이 간격 */
+      align-items: center;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      margin-bottom: 30px;
+    }
+
+    input[type="text"] {
+      flex-grow: 1; /* 남는 공간 차지 */
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    input[type="text"]:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+      outline: none;
+    }
+
+    input[type="submit"] {
+      padding: 12px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+
+    /* --- 게시글 목록 컨테이너 --- */
+    .data-container {
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      overflow: hidden; /* 내부 요소가 radius를 벗어나지 않게 */
+    }
+
+    /* --- ★★★ 핵심 수정 파트 ★★★ --- */
+    /* 게시글 한 줄(row)의 스타일 */
+    .data-container > div {
+      display: flex;
+      flex-wrap: wrap; /* 자식 요소들이 공간이 없으면 다음 줄로 넘어가게 설정 */
+      align-items: center;
+      padding: 20px;
+      border-bottom: 1px solid #f0f0f0;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    
+    .data-container > div:hover {
+      background-color: #f8f9fa;
+    }
+
+    .data-container > div:last-child {
+      border-bottom: none;
+    }
+
+    /* 게시글 정보 (id, title, author) 스타일 */
+    .data-id {
+      font-weight: bold;
+      color: #888;
+      margin-right: 20px;
+    }
+
+    .data-title {
+      flex-grow: 1; /* 제목이 남는 공간을 모두 차지 */
+      font-size: 18px;
+      font-weight: 500;
+    }
+
+    .data-author {
+      color: #007bff;
+      margin-left: 20px;
+      white-space: nowrap; /* 이름이 줄바꿈되지 않도록 */
+    }
+
+    /* --- ★★★ 댓글 영역 스타일 ★★★ --- */
+    .comments {
+      flex-basis: 100%; /* 부모(flex) 너비의 100%를 차지하여 강제로 줄바꿈 */
+      margin-top: 20px; /* 게시글 정보와 간격 */
+      padding: 15px;
+      background-color: #f8f9fa;
+      border-radius: 8px;
+      border-left: 4px solid #007bff;
+      display: none;
+    }
+
+    /* 개별 댓글 스타일 */
+    .comments > div {
+      display: flex;
+      padding: 8px 0;
+      border-bottom: 1px solid #e9ecef;
+    }
+
+    .comments > div:last-child {
+      border-bottom: none;
+    }
+
+    /* 댓글 내부 요소 스타일 */
+    .comment-id, .comment-postId {
+      font-weight: bold;
+      color: #555;
+      margin-right: 10px;
+    }
+    
+    .comment-postId {
+        display: none; /* postId는 보이지 않게 처리 */
+    }
+    
+    .comment-content {
+      color: #444;
+    }
+
+  </style>
+  </head>
+
+<body>
+  <div class="container">
+    <form name="postForm" action="./index.html" method="post">
+      <input type="text" name="title" placeholder="Enter title">
+      <input type="text" name="author" placeholder="Enter author">
+      <input type="submit" value="추가" />
+    </form>
+  </div>
+  <div class="data-container" id="data-container">
+  </div>
+  <div class="comments"></div>
+  <script src="./db.js"></script>
+</body>
+</html>
