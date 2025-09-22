@@ -16,10 +16,14 @@ newElement = () => {
   let cloned = document.querySelector('#myUL>li').cloneNode(true);
   // 클론에 innerHtml넣어주면 하위태그에 txt를제외한내용이 다 제거되서 백업해줘야함.
   let spand = cloned.querySelector('span');
-  
+
+  //하위클래스가 복수 있을때 classList로 목록을뽑아서, 특정클래스만 제거
+  cloned.classList.remove('checked');
+  //현재 클래스 목록에 새로운 클래스 추가
+  cloned.classList.add('checked');
+  cloned.className = ''; // 
   cloned.innerHTML = txt;
   cloned.appendChild(spand);
-
 }
 
 
@@ -101,6 +105,9 @@ MakeSpan = () => {
     e.target.parentElement.remove();
   });
   return span;
+}
+MakeLi = () => {
+  let li;
 }
 
 Refresh();
