@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>9th node</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous">
+  </script>
+</head>
+
+<body>
+  <h3>EMP Data List</h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>사번</th>
+        <th>이름</th>
+        <th>직무</th>
+        <th>급여</th>
+      </tr>
+    </thead>
+    <tbody id="list">
+
+    </tbody>
+  </table>
+  <script>
+    // http://localhost:3000/emp => json data
+    fetch(`http://localhost:3000/emp`)
+      .then(response => response.json())//응답정보 json객체를 javascript객체로 변환
+      .then(result => {
+        console.log(result);
+        result.forEach((item) => {
+          let tr = makeRow(item);
+          document.querySelector('#list').appendChild(tr);
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+// 사원정보 1건 => row 생성.
+      makeRow = (employee) => {
+      let fields = ['EMPNO', 'ENAME', 'JOB', 'SAL'];
+      let tr = document.createElement('tr');
+      tr.setAttribute('data-eno', employee.EMPNO);
+      fields.forEach((field) => {
+        let td = document.createElement('td');
+        td.innerHTML = employee[field];
+        tr.appendChild(td);
+      })
+      let btn = document.createElement('button');
+      btn.addEventListener('click', deleteFunc);
+      btn.innerHTML = '삭제';
+      let td = document.createElement('td');
+      td.appendChild(btn);
+      tr.appendChild(td);
+      return tr;
+    }
+
+// 삭제버튼눌렀을때 실행할 이벤트 핸들러.
+    function deleteFunc(e) {
+      console.log('this:', this);
+      // console.log(e.target.parentElement.parentElement.dataset.eno);
+      console.log(this.parentElement.parentElement.dataset.eno); // data-eno
+      let thisTr = this.parentElement.parentElement;
+      let eno = this.parentElement.parentElement.dataset.eno;
+      fetch(`http://localhost:3000/emp/` + eno)
+        .then(response => response.json())
+        .then(result => {
+          console.log('Result: ', result);
+          if (result.rowsAffected) {
+            alert('성공');
+            thisTr.remove();
+          } else {
+            alert('실패');
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    };
+  </script>
+</body>
+
+</html>
