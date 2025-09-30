@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>커뮤니티 회원가입</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* 기본 폰트를 Noto Sans KR과 Inter로 설정 */
+        body {
+            font-family: 'Noto Sans KR', 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+    <!-- 회원가입 폼 컨테이너 -->
+    <div class="w-full max-w-md bg-white rounded-xl shadow-lg p-8 m-4">
+        
+        <!-- 헤더 -->
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-800">회원가입</h1>
+            <p class="text-gray-500 mt-2">커뮤니티에 참여하여 다양한 이야기를 나눠보세요.</p>
+        </div>
+
+        <!-- 회원가입 폼 -->
+        <form id="signup-form" class="space-y-6">
+
+            <!-- 아이디 입력 필드 -->
+            <div>
+                <label for="user-id" class="block text-sm font-medium text-gray-700 mb-1">아이디</label>
+                <input type="text" id="user-id" name="id"
+                       class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+                       placeholder="영문, 숫자 포함 20자 이내" maxlength="20" required>
+            </div>
+
+            <!-- 비밀번호 입력 필드 -->
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700 mb-1">비밀번호</label>
+                <input type="password" id="password" name="pw"
+                       class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+                       placeholder="20자 이내" maxlength="20" required>
+            </div>
+
+            <!-- 비밀번호 확인 필드 -->
+            <div>
+                <label for="confirm-password" class="block text-sm font-medium text-gray-700 mb-1">비밀번호 확인</label>
+                <input type="password" id="confirm-password" name="pw-confirm"
+                       class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+                       placeholder="비밀번호를 다시 입력해주세요" maxlength="20" required>
+            </div>
+            
+            <!-- 이름(닉네임) 입력 필드 -->
+            <div>
+                <label for="user-name" class="block text-sm font-medium text-gray-700 mb-1">이름 (닉네임)</label>
+                <input type="text" id="user-name" name="name"
+                       class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+                       placeholder="다른 사용자와 겹치지 않는 이름" maxlength="50" required>
+                <p class="text-xs text-gray-500 mt-1">* 이름(닉네임)은 고유해야 하며, 게시글 및 댓글 작성자로 표시됩니다.</p>
+            </div>
+
+            <!-- 가입하기 버튼 -->
+            <div>
+                <button type="submit" id="submit-button"
+                        class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-transform transform hover:scale-105">
+                    가입하기
+                </button>
+            </div>
+        </form>
+        
+        <!-- 메시지 표시 영역 -->
+        <div id="message-area" class="mt-4 text-center text-sm"></div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const signupForm = document.getElementById('signup-form');
+            const submitButton = document.getElementById('submit-button');
+            const messageArea = document.getElementById('message-area');
+
+            signupForm.addEventListener('submit', (event) => {
+                event.preventDefault(); // 폼 기본 제출 동작 방지
+                
+                // 입력 값 가져오기
+                const userId = document.getElementById('user-id').value.trim();
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirm-password').value;
+                const userName = document.getElementById('user-name').value.trim();
+
+                // 메시지 초기화
+                showMessage('');
+
+                // 1. 빈 값 확인
+                if (!userId || !password || !confirmPassword || !userName) {
+                    showMessage('모든 항목을 입력해주세요.', 'error');
+                    return;
+                }
+
+                // 2. 비밀번호 일치 확인
+                if (password !== confirmPassword) {
+                    showMessage('비밀번호가 일치하지 않습니다.', 'error');
+                    return;
+                }
+
+                // 모든 유효성 검사 통과 시
+                handleSuccessfulSignup();
+            });
+
+            function handleSuccessfulSignup() {
+                // 버튼 비활성화 및 로딩 상태 표시
+                submitButton.disabled = true;
+                submitButton.textContent = '가입 처리 중...';
+                submitButton.classList.add('opacity-75', 'cursor-not-allowed');
+
+                // 실제로는 여기서 fetch API 등을 사용해 서버로 데이터를 전송합니다.
+                // 예: fetch('/api/register', { method: 'POST', body: new FormData(signupForm) })
+                // 오늘은 서버가 없으므로 성공을 시뮬레이션합니다.
+                setTimeout(() => {
+                    // 성공 메시지 표시
+                    showMessage(`${userName}님, 회원가입을 축하합니다!`, 'success');
+                    
+                    // 폼 초기화
+                    signupForm.reset();
+
+                    // 버튼 원래 상태로 복구
+                    submitButton.disabled = false;
+                    submitButton.textContent = '가입하기';
+                    submitButton.classList.remove('opacity-75', 'cursor-not-allowed');
+                }, 1500); // 1.5초 지연
+            }
+
+            /**
+             * 사용자에게 메시지를 표시하는 함수
+             * @param {string} text - 표시할 메시지
+             * @param {'success'|'error'} type - 메시지 종류 (성공 또는 에러)
+             */
+            function showMessage(text, type = 'error') {
+                messageArea.textContent = text;
+                if (type === 'success') {
+                    messageArea.className = 'mt-4 text-center text-sm text-green-600 font-medium';
+                } else {
+                    messageArea.className = 'mt-4 text-center text-sm text-red-600 font-medium';
+                }
+            }
+        });
+    </script>
+</body>
+</html>
