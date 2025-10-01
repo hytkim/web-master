@@ -1,0 +1,53 @@
+#container{
+  border: 1px solid #ccc;
+  width: 960px;
+  padding: 20px;
+  margin: 0 auto; 
+}
+header > span {
+  text-align: center;
+  margin-top: 0px;
+  padding: 0;
+  background-color: yellow;
+}
+header p {
+  margin: 0;
+}
+.logo {
+  
+}
+header span{
+  display: block;
+  margin-top: 20px;
+}
+
+aside{
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  width: 262px;
+  padding: 20px;
+  float: left;
+  margin-bottom: 20px;
+  background-color: rgb(242, 215, 255);
+}
+aside p{
+  text-align: left;
+}
+.greenText{
+  color: #559b5a;
+}
+main{
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  width: 426px;
+  padding: 20px;
+  float: left;
+  margin-bottom: 20px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+footer{
+  border: 1px solid #ccc;
+  clear: both;
+  padding: 10px;
+}
