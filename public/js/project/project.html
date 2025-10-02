@@ -11,38 +11,120 @@
 <body>
   <div id="container">
     <header>
-      <span>
-        <!-- <p class="greenText">- container : 테두리 1px, 너비 960px, 안여백 20px, 화면 중앙에 위치</p> -->
-        <!-- <p class="greenText">- header : 테두리 1px, 안여백 10px, 아래 요소와 간격 20px</p> -->
-        <p class="logo">yedam store</p>
-      </span>
+      <div class="logo-container">
+        <a href="/"> <img src="logo.png" alt="Yedam Store 로고"> </a>
+      </div>
+      <nav>
+        <ul class="menu-left">
+          <li><a href="#">베스트</a></li>
+          <li><a href="#">상품 조회</a></li>
+          <li><a href="#">리뷰 게시판</a></li>
+          <li><a href="#">거래내역 조회</a></li>
+        </ul>
+        <div class="menu-right">
+          <a href="#">로그인</a>
+          <span class="divider">/</span>
+          <a href="#">회원가입</a>
+        </div>
+      </nav>
     </header>
-    <aside>
-      <h2>왼쪽 사이드 바</h2>
-      <p>광고1</p>
-      <p>광고2</p>
-      <p class="greenText">테두리 1px, 너비 220px, 안여<br>백 20px, 왼쪽으로 플로팅, 아<br>래요소와 간격 20px, 배경색</p>
-    </aside>
     <main>
-      <h2>본문</h2>
-      <p>내용 입력1</p>
-      <p>내용 입력2</p>
-      <p class="greenText">테두리 1px, 너비 ???px,<br>안여백 20px, 왼쪽으로 플로팅,<br>좌우 요소와의 간격 5px, 아래요소와 간격 20px</p>
+      <div class="card-container">
+        <div class="card" data-href="/j2/products/568767987">
+          <img class="image"
+            src="https://shop-phinf.pstatic.net/20250310_3/1741577561726tGBJB_JPEG/411621843739980_1130884599.jpg?type=f750_974"
+            alt="상품 이미지">
+          <div class="card-content">
+            <p class="name">마요라 커피코커피맛 캔디</p>
+
+            <div class="price-section">
+              <del class="original-price">10,000원</del>
+
+              <div class="final-price-line">
+                <span class="discount-rate">82%</span>
+                <span class="final-price">1,750원</span>
+              </div>
+            </div>
+
+            <div class="tags">
+              <span class="tag">#사탕</span>
+            </div>
+          </div>
+        </div>
+        <div class="card" data-href="/j2/products/568767987">
+          <img class="image"
+            src="https://shop-phinf.pstatic.net/20250310_3/1741577561726tGBJB_JPEG/411621843739980_1130884599.jpg?type=f750_974"
+            alt="상품 이미지">
+          <div class="card-content">
+            <p class="name">마요라 커피코커피맛 캔디</p>
+
+            <div class="price-section">
+              <del class="original-price">10,000원</del>
+
+              <div class="final-price-line">
+                <span class="discount-rate">82%</span>
+                <span class="final-price">1,750원</span>
+              </div>
+            </div>
+
+            <div class="tags">
+              <span class="tag">#사탕</span>
+            </div>
+          </div>
+        </div>
+        <div class="card" data-href="/j2/products/568767987">
+          <img class="image"
+            src="https://shop-phinf.pstatic.net/20240329_287/1711673090389z0Mfe_JPEG/112808933099057218_1101626280.jpg?type=f750_974"
+            alt="상품 이미지">
+          <div class="card-content">
+            <p class="name">마요라 커피코커피맛 캔디</p>
+
+            <div class="price-section">
+              <del class="original-price">10,000원</del>
+
+              <div class="final-price-line">
+                <span class="discount-rate">82%</span>
+                <span class="final-price">1,750원</span>
+              </div>
+            </div>
+
+            <div class="tags">
+              <span class="tag">#사탕</span>
+            </div>
+          </div>
+        </div>
+        <div class="card" data-href="/j2/products/568767987">
+          <img class="image"
+            src="logo.png"
+            alt="상품 이미지">
+          <div class="card-content">
+            <p class="name">마요라 커피코커피맛 캔디</p>
+
+            <div class="price-section">
+              <del class="original-price">10,000원</del>
+
+              <div class="final-price-line">
+                <span class="discount-rate">82%</span>
+                <span class="final-price">1,750원</span>
+              </div>
+            </div>
+
+            <div class="tags">
+              <span class="tag">#사탕</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
-    <aside>
-      <h2>오른쪽 사이드 바</h2>
-      <p>광고1</p>
-      <p>광고2</p>
-      <p class="greenText">테두리 1px, 너비 220px, 안여<br>백 20px, 오른쪽으로 플로팅,<br> 아래요소와 간격 20px, 배경색</p>
-    </aside>
-    <footer>
+    <!-- <footer>
       <h2>
         푸터
       </h2>
       <p>저작권 정보, 연락처 등</p>
       <p class="greenText">테두리 1px, 양쪽 플로팅 해제, 안여백 10px</p>
-    </footer>
+    </footer> -->
   </div>
+  <script src="project.js"></script>
 </body>
 
 </html>

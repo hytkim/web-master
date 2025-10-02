@@ -161,38 +161,6 @@
       document.getElementById(btn.dataset.target).classList.add('active');
     });
   });
-
-  // 아이디 찾기 (이름과 주소 기반)
-  const findIdForm = document.querySelector('#find-id form');
-  findIdForm.addEventListener('submit', async e => {
-    e.preventDefault();
-    const form        = e.target;
-    const userName    = form.userName.value;
-    const userAddress = form.userAddress.value;
-
-    // 가상 데이터 응답 (실제로는 서버와 통신)
-    const data = (userName === "Alice" && userAddress === "Seoul") ? { foundId: "user01" } : {};
-
-    document.getElementById('find-id-msg').textContent = data.foundId 
-      ? `회원님의 아이디: ${data.foundId}` 
-      : '일치하는 정보가 없습니다.';
-  });
-
-  // 비밀번호 찾기 (아이디와 주소 기반)
-  const findPwForm = document.querySelector('#find-pw form');
-  findPwForm.addEventListener('submit', async e => {
-    e.preventDefault();
-    const form        = e.target;
-    const userId      = form.userId.value;
-    const userAddress = form.userAddress.value;
-
-    // 가상 데이터 응답 (실제로는 서버와 통신)
-    const data = (userId === "user01" && userAddress === "Seoul") ? { tempPw: true } : {};
-
-    document.getElementById('find-pw-msg').textContent = data.tempPw 
-      ? '임시 비밀번호를 발송 처리했습니다.'
-      : '입력하신 정보가 일치하지 않습니다.';
-  });
 </script>
 </body>
 </html>

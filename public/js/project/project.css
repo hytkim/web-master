@@ -1,53 +1,154 @@
 #container{
-  border: 1px solid #ccc;
-  width: 960px;
+  /* border: 1px solid #ccc; */
+  width: 1280px;
   padding: 20px;
   margin: 0 auto; 
 }
-header > span {
-  text-align: center;
-  margin-top: 0px;
-  padding: 0;
-  background-color: yellow;
-}
-header p {
+
+ul {
+  list-style: none;
   margin: 0;
-}
-.logo {
-  
-}
-header span{
-  display: block;
-  margin-top: 20px;
+  padding: 0;
 }
 
-aside{
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  width: 262px;
-  padding: 20px;
-  float: left;
-  margin-bottom: 20px;
-  background-color: rgb(242, 215, 255);
+/* header - nav 영역 */
+header {
+  /* border: 1px solid #ccc; */
+  /* overflow: hidden; */
 }
-aside p{
-  text-align: left;
+header > div {
+  text-align: center;
+  margin: 0px;
+  padding: 0px;
 }
-.greenText{
-  color: #559b5a;
+nav {
+  display: flex; /* 자식 요소들을 Flex 아이템으로 만듦 */
+  justify-content: space-between; /* 양쪽 끝으로 밀착 정렬! */
+  align-items: center; /* 세로 중앙 정렬 (선택 사항) */
+  margin: 0 auto; /* 중앙 정렬 (선택 사항) */
+  padding: 0px 5px;
+  border-bottom: 1px solid #ccc;
+  border-top: 1px solid #ccc;
 }
-main{
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  width: 426px;
-  padding: 20px;
-  float: left;
-  margin-bottom: 20px;
-  margin-left: 5px;
-  margin-right: 5px;
+.logo-container img {
+  height: 128px; /* 원하는 높이로 설정 (예: 40px) */
+  width: auto; /* 너비는 높이에 맞춰 자동으로 조절 */
+  vertical-align: middle; /* 다른 메뉴들과 세로 정렬을 맞출 때 유용 */
+}
+header ul li {
+  padding: 0px 12px;
+}
+header nav a {
+  text-decoration: none;
+  color: #555;
+  padding: 24px 12px;
+  display: inline-block; /* padding 적용을 위해 */
+}
+header nav a :hover{
+  font-weight: 700;
+}
+/* 메뉴 그룹 Flexbox 설정 */
+.menu-left, .menu-right {
+  display: flex; /* 내부 아이템(li, a)들을 가로로 나열 */
+  align-items: center; /* 세로 중앙 정렬 */
+}
+
+/* 슬래시(/) 스타일 */
+.divider {
+  color: #ccc;
+  padding: 0 5px;
+  /* pointer-events: none;를 주면 클릭 이벤트를 무시하게 할 수도 있습니다. */
+}
+
+/* aside - main 영역 */
+/* Flexbox 컨테이너 설정 (핵심!) */
+.card-container {
+  display: flex; /* 자식 요소(카드들)를 Flex 아이템으로 만듭니다 */
+  justify-content: center; /* ★★★ 가로축 중앙 정렬! 이게 바로 핵심입니다. */
+  flex-wrap: wrap; /* 화면이 좁아지면 카드가 아래로 자동으로 줄바꿈됩니다 (반응형 대응) */
+  gap: 10px; /* 카드 사이의 간격을 예쁘게 벌려줍니다 */
+  padding: 50px 0px; /* 컨테이너 자체의 상하좌우 여백 */
+}
+
+/* 개별 카드 스타일링 */
+.card {
+  width: 300px;
+  height: 500px;
+  overflow: hidden; /* 이미지가 모서리 밖으로 튀어나가지 않도록 */
+  display: flex; /* 카드 내부 요소(이미지, 콘텐츠)를 정렬하기 위해 또 Flex 사용! */
+  flex-direction: column; /* 내부 요소를 세로로 쌓습니다 */
+}
+
+/* 카드 이미지 */
+.card img {
+  /* width: 100%; */
+  height: 70%;
+  object-fit: contain; /* 이미지가 비율을 유지하며 꽉 차도록 설정 */
+}
+
+/* 카드 텍스트 콘텐츠 */
+/* 텍스트 콘텐츠 영역 (Flexbox로 자식요소들을 제어) */
+.card-content {
+  flex-grow: 1; /* 남은 공간(30%)을 모두 차지 */
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* 자식 요소들을 위아래로 균등 배분 */
+}
+
+/* 상품명 */
+.name {
+  font-size: 16px;
+  margin: 0;
+  line-height: 1.4; /* 줄 간격 */
+}
+
+/* 가격 섹션 */
+.price-section {
+  margin-top: 5px; /* 이름과의 간격 */
+}
+
+/* 원가 (취소선) */
+.original-price {
+  font-size: 14px;
+  color: #aaa;
+  text-decoration: line-through; /* del 태그의 기본 스타일이지만 명시 */
+}
+
+/* 할인율 + 최종 가격 라인 */
+.final-price-line {
+  margin-top: 2px;
+}
+
+.discount-rate {
+  font-size: 22px;
+  font-weight: bold;
+  color: #f03f40; /* 쨍한 빨간색 */
+  margin-right: 8px;
+}
+
+.final-price {
+  font-size: 22px;
+  font-weight: bold;
+  color: #333; /* 기본 검정보다 살짝 연하게 */
+}
+
+/* 태그 */
+.tags {
+  /* 가격 섹션과의 간격 */
+  /* margin-top: 10px; */
+}
+
+.tag {
+  display: inline-block; /* padding을 주기 위해 */
+  padding: 4px 8px;
+  font-size: 12px;
+  border: 1px solid #00c7ae;
+  border-radius: 5px;
+  color: #00c7ae;
 }
 footer{
-  border: 1px solid #ccc;
-  clear: both;
-  padding: 10px;
+  /* border: 1px solid #ccc; */
+  /* clear: both; */
+  /* padding: 10px; */
 }
