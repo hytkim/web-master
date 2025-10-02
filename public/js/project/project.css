@@ -10,12 +10,6 @@ ul {
   margin: 0;
   padding: 0;
 }
-
-/* header - nav 영역 */
-header {
-  /* border: 1px solid #ccc; */
-  /* overflow: hidden; */
-}
 header > div {
   text-align: center;
   margin: 0px;
@@ -133,12 +127,6 @@ header nav a :hover{
   color: #333; /* 기본 검정보다 살짝 연하게 */
 }
 
-/* 태그 */
-.tags {
-  /* 가격 섹션과의 간격 */
-  /* margin-top: 10px; */
-}
-
 .tag {
   display: inline-block; /* padding을 주기 위해 */
   padding: 4px 8px;
@@ -146,9 +134,4 @@ header nav a :hover{
   border: 1px solid #00c7ae;
   border-radius: 5px;
   color: #00c7ae;
-}
-footer{
-  /* border: 1px solid #ccc; */
-  /* clear: both; */
-  /* padding: 10px; */
 }

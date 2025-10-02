@@ -126,3 +126,14 @@ const MakeRow = (item) => {
   // 완성된 카드(div) 요소를 반환
   return div;
 };
+
+//회원 가입 폼에 이벤트 추가
+document.forms.signupForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+let user_id = document.getElementById('userId');
+let user_pw = document.getElementById('userPw');
+let user_name = document.getElementById('userName');
+let user_address = document.getElementById('userAddress');
+let user_birth = document.getElementById('userBirth');
+
+});
