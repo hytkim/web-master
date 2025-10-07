@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>리뷰 게시판 - yedam store</title>
+    <link href="project.css" rel="stylesheet">
+    <link href="board.css" rel="stylesheet">
+</head>
+<body>
+    <div id="container">
+        <header>
+            <div class="logo-container">
+                <a href="index.html"> <img src="logo.png" alt="Yedam Store 로고"> </a>
+            </div>
+        </header>
+
+        <main class="board-main">
+            <h1>리뷰 게시판</h1>
+            
+            <div class="board-list">
+                <div class="board-header">
+                    <div class="board-col-title">제목/상품</div>
+                    <div class="board-col-author">작성자</div>
+                    <div class="board-col-date">작성일</div>
+                </div>
+                <ul class="post-list">
+                    <!-- 게시물 목록이 동적으로 여기에 삽입됩니다. -->
+                </ul>
+            </div>
+
+            <div class="pagination">
+                <a href="#" class="active">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <a href="#">4</a>
+                <a href="#">5</a>
+                <a href="#">...</a>
+                <a href="#">10</a>
+                <a href="#">다음 ></a>
+            </div>
+
+            <div class="search-bar">
+                <select name="search-type" id="search-type">
+                    <option value="title">제목</option>
+                    <option value="category">상품종류</option>
+                </select>
+                <input type="text" id="search-keyword" placeholder="검색어를 입력하세요">
+                <button type="submit" id="search-btn">검색</button>
+            </div>
+        </main>
+    </div>
+    <!-- <script src="project.js" defer></script> -->
+    <script src="board.js" defer></script>
+    <script src="project.js" defer></script>
+</body>
+</html>

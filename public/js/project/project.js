@@ -344,136 +344,165 @@ new daum.Postcode({
 }).open();
 }
 /* ====================================================== */
-/* ======== 추가된 부분 2: 로그인 성공 시 사용자 정보 표시 함수 ======== */
+/* ======== 2. 로그인/UI 제어 관련 함수 ======== */
 /* ====================================================== */
 
 /**
- * ✅ 새로 추가된 함수
- * 로그인 성공 시 호출되어 사용자 정보를 화면에 표시
- * @param {object} userData - 서버에서 반환된 사용자 데이터 객체
- *                            예: { USER_ID: 'test123', USER_NAME: '홍길동', ... }
+ * 로그인 성공 시 UI를 업데이트하고 사용자 정보를 화면에 표시
+ * @param {object} userData - 서버에서 받은 사용자 데이터
  */
 const showUserInfo = (userData) => {
-  // 1. 로그인/회원가입 메뉴 숨기기
   authMenu.style.display = 'none';
-  
-  // 2. 사용자 이름 표시 (예: "홍길동님")
   userNameEl.textContent = userData.USER_NAME + '님';
-  
-  // 3. 사용자 ID 표시 (예: "(test123)")
   userIdEl.textContent = `(${userData.USER_ID})`;
-  
-  // 4. 사용자 정보 영역 활성화 (CSS의 .active 클래스 추가)
   userMenu.classList.add('active');
-  
-  // 5. 팝업창 닫기
   closePopup();
-  
-  // 6. 콘솔에 로그인 정보 출력 (디버깅용)
   console.log('로그인 성공! 사용자 정보:', userData);
 }
 
-
-/* ====================================================== */
-/* ======== 추가된 부분 3: 로그아웃 처리 함수 ======== */
-/* ====================================================== */
-
 /**
- * ✅ 새로 추가된 함수
- * 로그아웃 버튼 클릭 시 호출되어 원래 상태로 복귀
+ * 로그아웃 시 UI를 초기 상태로 되돌림
  */
 const handleLogout = () => {
-  // 1. 사용자 정보 영역 숨기기 (.active 클래스 제거)
+  // ✅ localStorage에서 사용자 정보 삭제
+  localStorage.removeItem('user');
+  
   userMenu.classList.remove('active');
-  
-  // 2. 로그인/회원가입 메뉴 다시 표시
   authMenu.style.display = 'flex';
-  
-  // 3. 로그인 폼의 입력 필드 초기화 (보안을 위해)
   document.querySelector('#username').value = '';
   document.querySelector('#password').value = '';
-  
-  // 4. 콘솔에 로그 출력 (디버깅용)
   console.log('로그아웃 완료');
 }
 
+/**
+ * ✅ 페이지 로드 시 localStorage를 확인하여 로그인 상태를 복원
+ */
+const checkLoginState = () => {
+  const storedUser = localStorage.getItem('user');
+  if (storedUser) {
+    const userData = JSON.parse(storedUser);
+    showUserInfo(userData);
+  }
+}
 
 /* ====================================================== */
-/* ======== 추가된 부분 4: 로그아웃 버튼 이벤트 리스너 ======== */
+/* ======== 3. 이벤트 리스너 설정 ======== */
 /* ====================================================== */
 
-// ✅ 새로 추가: 로그아웃 버튼 클릭 시 handleLogout 함수 실행
+// 페이지가 처음 로드될 때 로그인 상태 확인
+document.addEventListener('DOMContentLoaded', checkLoginState);
+
+// 헤더의 '로그인' 버튼 클릭 시
+openLoginBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  openPopup('login');
+});
+
+// 헤더의 '회원가입' 버튼 클릭 시
+openSignupBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  openPopup('signup');
+});
+
+// 팝업 'X' 버튼 클릭 시
+closeBtn.addEventListener('click', closePopup);
+
+// 팝업 배경 클릭 시
+popupWrapper.addEventListener('click', (e) => {
+  if (e.target === popupWrapper) {
+    closePopup();
+  }
+});
+
+// 팝업 탭 버튼 클릭 시
+popupNavButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    setActiveTab(btn.dataset.target);
+  });
+});
+
+// 로그아웃 버튼 클릭 시
 logoutBtn.addEventListener('click', handleLogout);
 
 
 /* ====================================================== */
-/* ======== 변경된 부분 5: 로그인 폼 제출 처리 ======== */
+/* ======== 4. Form 제출(submit) 이벤트 처리 ======== */
 /* ====================================================== */
 
+// 로그인 폼 제출
 document.forms[0].addEventListener('submit', (e) => {
-  // submit 이벤트의 기본 기능을 차단하겠습니다.
   e.preventDefault();
   let id = document.querySelector('#username').value;
   let pw = document.querySelector('#password').value;
   
   fetch('http://localhost:3000/login', {
-    method:'post', //post방식은 data가 body? header에 담겨서 전달된다, 
-    headers:{ 'Content-Type':'application/json;charset=utf-8' }, // json으로넘겨줄거고, 한글쓸꺼다.
+    method:'post',
+    headers:{ 'Content-Type':'application/json;charset=utf-8' },
     body: JSON.stringify({id, pw})
   })
-  .then(response => response.json()) // 서버의 응답결과
+  .then(response => response.json())
   .then(result => {
-    // 정상적인 응답이 있었을경우, popup-wrapper를 비활성화하고 그 자리에 사용자이름을 추가하는식으로 진행할듯 
-    // console.log(result);
-    const userData = result.user_result[0];
+    if (result.success && result.user_result.length > 0) {
+      const userData = result.user_result[0];
       
-    // showUserInfo 함수 호출하여 사용자 정보 표시
-    showUserInfo(userData);
+      // ✅ 로그인 성공 시 localStorage에 사용자 정보 저장
+      localStorage.setItem('user', JSON.stringify(userData));
+      
+      showUserInfo(userData);
+    } else {
+      alert(result.message || '아이디 또는 비밀번호가 일치하지 않습니다.');
+    }
   })
   .catch(err => console.log(err));
 });
-// Id serchi
+
+// 아이디 찾기 폼 제출
 document.forms[1].addEventListener('submit', (e)=> {
   e.preventDefault();
   let user_name = document.getElementById('id_search_name').value;
   let user_address = document.getElementById('id_searchaddress').value.trim()+ document.getElementById('id_searchdetailAddress').value.trim();
   fetch('http://localhost:3000/searchId', {
-    method:'post', //post방식은 data가 body? header에 담겨서 전달된다, 
-    headers:{ 'Content-Type':'application/json;charset=utf-8' }, // json으로넘겨줄거고, 한글쓸꺼다.
+    method:'post',
+    headers:{ 'Content-Type':'application/json;charset=utf-8' },
     body: JSON.stringify({user_name, user_address})
   })
-  .then(response => response.json()) // 서버의 응답결과
+  .then(response => response.json())
   .then(search => {
-    // console.log('search result is: ',search.result);
-    console.log('search result[0] is: ',search.result[0]);
-    let searchId = search.result[0].USER_ID;
-    alert(`회원님의 ID는 [ ${searchId} ] 입니다.`);
-    closePopup();
+    if (search.success && search.result.length > 0) {
+      let searchId = search.result[0].USER_ID;
+      alert(`회원님의 ID는 [ ${searchId} ] 입니다.`);
+      closePopup();
+    } else {
+      alert('일치하는 사용자 정보가 없습니다.');
+    }
   })
   .catch(err => console.log(err));
 });
-// Pw serchi
-document.forms[2].addEventListener('submit', (e)=> {
-  e.preventDefault();
 
+// 비밀번호 찾기 폼 제출
+document.forms[2].addEventListener('submit', (e)=> {
   e.preventDefault();
   let user_id = document.getElementById('pw_search_id').value;
   let user_address = document.getElementById('pw_searchaddress').value.trim()+ document.getElementById('pw_searchdetailAddress').value.trim();
   fetch('http://localhost:3000/searchPw', {
-    method:'post', //post방식은 data가 body? header에 담겨서 전달된다, 
-    headers:{ 'Content-Type':'application/json;charset=utf-8' }, // json으로넘겨줄거고, 한글쓸꺼다.
+    method:'post',
+    headers:{ 'Content-Type':'application/json;charset=utf-8' },
     body: JSON.stringify({user_id, user_address})
   })
-  .then(response => response.json()) // 서버의 응답결과
+  .then(response => response.json())
   .then(search => {
-    // console.log('search result is: ',search.result);
-    console.log('search result[0] is: ',search.result[0]);
-    let searchId = search.result[0].USER_PW;
-    alert(`회원님의 Pw는 [ ${searchId} ] 입니다.`);
-    closePopup();
+    if (search.success && search.result.length > 0) {
+      let searchPw = search.result[0].USER_PW;
+      alert(`회원님의 Pw는 [ ${searchPw} ] 입니다.`);
+      closePopup();
+    } else {
+      alert('일치하는 사용자 정보가 없습니다.');
+    }
   })
   .catch(err => console.log(err));
 });
+
+// 회원가입 폼 제출
 document.forms[3].addEventListener('submit', (e)=> {
   e.preventDefault();
   let id = document.getElementById('signup_id');
@@ -484,35 +513,33 @@ document.forms[3].addEventListener('submit', (e)=> {
   let d_addr = document.getElementById('signup_detailAddress');
   let birth = document.getElementById('signup_userBirth');
 
-  // 비밀번호 확인
-    if (pw.value !== pw2.value) {
-      alert('비밀번호가 일치하지 않습니다.');
-      pw2Input.focus();
-      return;
-    }
+  if (pw.value !== pw2.value) {
+    alert('비밀번호가 일치하지 않습니다.');
+    pw2.focus();
+    return;
+  }
 
-    // 주소 조합
-    const fullAddress = addr.value.trim() + d_addr.value.trim();
-    console.log('최종 저장될 주소: ',fullAddress);
-
-    // 서버로 보낼 데이터 객체 생성
-    let body_id = id.value;
-    let body_pw = pw.value;
-    let body_name = name.value;
-    let body_addr = fullAddress;
-    let body_birth = birth.value;
-
+  const fullAddress = addr.value.trim() + d_addr.value.trim();
+  
   fetch('http://localhost:3000/signup', {
-    method:'post', //post방식은 data가 body? header에 담겨서 전달된다, 
-    headers:{ 'Content-Type':'application/json;charset=utf-8' }, // json으로넘겨줄거고, 한글쓸꺼다.
-    body: JSON.stringify({body_id, body_pw, body_name, body_addr, body_birth})
+    method:'post',
+    headers:{ 'Content-Type':'application/json;charset=utf-8' },
+    body: JSON.stringify({
+      body_id: id.value,
+      body_pw: pw.value,
+      body_name: name.value,
+      body_addr: fullAddress,
+      body_birth: birth.value
+    })
   })
-  .then(response => response.json()) // 서버의 응답결과
+  .then(response => response.json())
   .then(result => {
-    console.log('result is: ',result);
-    
-    alert(`회원 가입성공: ${name.value}, 이제 로그인해주세요.`);
-    closePopup();
+    if (result.success) {
+      alert(`회원 가입 성공: ${name.value}님, 이제 로그인해주세요.`);
+      setActiveTab('login'); // 로그인 탭으로 전환
+    } else {
+      alert('회원가입 중 오류가 발생했습니다: ' + result.detail);
+    }
   })
   .catch(err => console.log(err));
 });

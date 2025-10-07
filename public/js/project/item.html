@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상품 상세 - yedam store</title>
+    <link href="project.css" rel="stylesheet">
+    <link href="item.css" rel="stylesheet">
+</head>
+<body>
+    <div id="container">
+        <header>
+            <div class="logo-container">
+                <a href="index.html"> <img src="logo.png" alt="Yedam Store 로고"> </a>
+            </div>
+        </header>
+
+        <main class="item-main">
+            <div class="item-container">
+                <!-- 왼쪽: 상품 이미지 영역 -->
+                <div class="item-image-section">
+                    <img src="logo.png" alt="메인 상품 이미지" class="main-image" id="item-image">
+                </div>
+
+                <!-- 오른쪽: 상품 정보 및 구매 영역 -->
+                <div class="item-info-section">
+                    <h1 class="item-title" id="item-title">상품 정보를 불러오는 중...</h1>
+                    <p class="item-origin" id="item-origin"></p>
+                    
+                    <div class="item-description">
+                        <p id="item-description-content"></p>
+                    </div>
+
+                    <!-- 가격 표시 영역 -->
+                    <div class="price-display" id="item-price-display">
+                        <!-- 가격 정보가 여기에 동적으로 렌더링됩니다. -->
+                    </div>
+
+                    <div class="quantity-control">
+                        <button class="quantity-btn" id="quantity-minus">-</button>
+                        <input type="text" value="1" class="quantity-input" id="quantity-input" readonly>
+                        <button class="quantity-btn" id="quantity-plus">+</button>
+                    </div>
+
+                    <div class="total-price-section">
+                        <span>총 상품 금액</span>
+                        <span class="total-price" id="total-price">0원</span>
+                    </div>
+
+                    <button class="buy-now-btn">구매하기</button>
+                </div>
+            </div>
+
+            <div class="reviews-section">
+                <h2>상품 리뷰</h2>
+                <div id="reviews-container">
+                    <!-- 리뷰가 여기에 동적으로 로드됩니다. -->
+                </div>
+            </div>
+        </main>
+    </div>
+    <!-- <script src="project.js" defer></script> -->
+    <script src="item.js" defer></script>
+</body>
+</html>
