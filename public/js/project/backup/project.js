@@ -50,7 +50,7 @@ const MakeRow = (item) => {
   priceSection.setAttribute('class', 'price-section');
 
   const discountPercent = item.DISCOUNT_PERCENT * 100;
-  const finalPriceValue = Math.round(item.ITEMS_PRICE * (1 - item.DISCOUNT_PERCENT)); // const finalPriceValue = Math.floor(item.ITEMS_PRICE * (1 - item.DISCOUNT_PERCENT));
+  const finalPriceValue = Math.floor(item.ITEMS_PRICE * (1 - item.DISCOUNT_PERCENT));
 
   // --- 할인이 있는 경우와 없는 경우를 분리하여 표시 ---
   if (discountPercent > 0) {
@@ -150,22 +150,6 @@ const openPopup = (targetTab) => {
 // 팝업을 닫는 함수
 const closePopup = () => {
   popupWrapper.classList.remove('active');
-
-  // --- 이 부분이 추가됩니다 ---
-    // 1. 팝업 안의 모든 form 요소를 찾습니다.
-    const formsInPopup = document.querySelectorAll('.popup form');
-
-    // 2. 각 폼에 대해 reset() 메서드를 호출하여 모든 입력 필드를 초기화합니다.
-    formsInPopup.forEach(form => {
-      form.reset();
-    });
-
-    // 3. (추가) 아이디/비밀번호 찾기 결과 메시지가 표시되는 영역도 비워줍니다.
-    const messageElements = document.querySelectorAll('.popup .message');
-    messageElements.forEach(msg => {
-      msg.innerHTML = '';
-    });
-    // --- 여기까지 추가됩니다 ---
 }
 
 // --- 이벤트 리스너(Event Listener) 설정 ---
@@ -247,102 +231,6 @@ popupNavButtons.forEach(btn => {
   });
 });
 
-// id/pw 찾기버튼 함수
-
-function execDaumPostcode_id() {
-new daum.Postcode({
-    oncomplete: function(data) {
-        // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
-        // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-        // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-        var addr = ''; // 주소 변수
-        var extraAddr = ''; // 참고항목 변수
-
-        //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-        if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-            addr = data.roadAddress;
-        } else { // 사용자가 지번 주소를 선택했을 경우(J)
-            addr = data.jibunAddress;
-        }
-
-        // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-        if(data.userSelectedType === 'R'){
-            // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-            // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-            if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-                extraAddr += data.bname;
-            }
-            // 건물명이 있고, 공동주택일 경우 추가한다.
-            if(data.buildingName !== '' && data.apartment === 'Y'){
-                extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-            }
-            // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-            if(extraAddr !== ''){
-                extraAddr = ' (' + extraAddr + ')';
-            }
-            // 조합된 참고항목을 해당 필드에 넣는다.
-            document.getElementById("id_searchextraAddress").value = extraAddr;
-        
-        } else {
-            document.getElementById("id_searchextraAddress").value = '';
-        }
-
-        // 우편번호와 주소 정보를 해당 필드에 넣는다.
-        document.getElementById('id_serch_postcode').value = data.zonecode;
-        document.getElementById("id_searchaddress").value = addr;
-        // 커서를 상세주소 필드로 이동한다.
-        document.getElementById("id_searchdetailAddress").focus();
-    }
-}).open();
-}
-function execDaumPostcode_pw() {
-new daum.Postcode({
-    oncomplete: function(data) {
-        // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
-        // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-        // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-        var addr = ''; // 주소 변수
-        var extraAddr = ''; // 참고항목 변수
-
-        //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-        if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-            addr = data.roadAddress;
-        } else { // 사용자가 지번 주소를 선택했을 경우(J)
-            addr = data.jibunAddress;
-        }
-
-        // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-        if(data.userSelectedType === 'R'){
-            // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-            // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-            if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-                extraAddr += data.bname;
-            }
-            // 건물명이 있고, 공동주택일 경우 추가한다.
-            if(data.buildingName !== '' && data.apartment === 'Y'){
-                extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-            }
-            // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-            if(extraAddr !== ''){
-                extraAddr = ' (' + extraAddr + ')';
-            }
-            // 조합된 참고항목을 해당 필드에 넣는다.
-            document.getElementById("pw_searchextraAddress").value = extraAddr;
-        
-        } else {
-            document.getElementById("pw_searchextraAddress").value = '';
-        }
-
-        // 우편번호와 주소 정보를 해당 필드에 넣는다.
-        document.getElementById('pw_search_postcode').value = data.zonecode;
-        document.getElementById("pw_searchaddress").value = addr;
-        // 커서를 상세주소 필드로 이동한다.
-        document.getElementById("pw_searchdetailAddress").focus();
-    }
-}).open();
-}
 /* ====================================================== */
 /* ======== 추가된 부분 2: 로그인 성공 시 사용자 정보 표시 함수 ======== */
 /* ====================================================== */
@@ -429,90 +317,6 @@ document.forms[0].addEventListener('submit', (e) => {
       
     // showUserInfo 함수 호출하여 사용자 정보 표시
     showUserInfo(userData);
-  })
-  .catch(err => console.log(err));
-});
-// Id serchi
-document.forms[1].addEventListener('submit', (e)=> {
-  e.preventDefault();
-  let user_name = document.getElementById('id_search_name').value;
-  let user_address = document.getElementById('id_searchaddress').value.trim()+ document.getElementById('id_searchdetailAddress').value.trim();
-  fetch('http://localhost:3000/searchId', {
-    method:'post', //post방식은 data가 body? header에 담겨서 전달된다, 
-    headers:{ 'Content-Type':'application/json;charset=utf-8' }, // json으로넘겨줄거고, 한글쓸꺼다.
-    body: JSON.stringify({user_name, user_address})
-  })
-  .then(response => response.json()) // 서버의 응답결과
-  .then(search => {
-    // console.log('search result is: ',search.result);
-    console.log('search result[0] is: ',search.result[0]);
-    let searchId = search.result[0].USER_ID;
-    alert(`회원님의 ID는 [ ${searchId} ] 입니다.`);
-    closePopup();
-  })
-  .catch(err => console.log(err));
-});
-// Pw serchi
-document.forms[2].addEventListener('submit', (e)=> {
-  e.preventDefault();
-
-  e.preventDefault();
-  let user_id = document.getElementById('pw_search_id').value;
-  let user_address = document.getElementById('pw_searchaddress').value.trim()+ document.getElementById('pw_searchdetailAddress').value.trim();
-  fetch('http://localhost:3000/searchPw', {
-    method:'post', //post방식은 data가 body? header에 담겨서 전달된다, 
-    headers:{ 'Content-Type':'application/json;charset=utf-8' }, // json으로넘겨줄거고, 한글쓸꺼다.
-    body: JSON.stringify({user_id, user_address})
-  })
-  .then(response => response.json()) // 서버의 응답결과
-  .then(search => {
-    // console.log('search result is: ',search.result);
-    console.log('search result[0] is: ',search.result[0]);
-    let searchId = search.result[0].USER_PW;
-    alert(`회원님의 Pw는 [ ${searchId} ] 입니다.`);
-    closePopup();
-  })
-  .catch(err => console.log(err));
-});
-document.forms[3].addEventListener('submit', (e)=> {
-  e.preventDefault();
-  let id = document.getElementById('signup_id');
-  let pw = document.getElementById('signup_pw');
-  let pw2 = document.getElementById('signup_pw2');
-  let name = document.getElementById('signup_name');
-  let addr = document.getElementById('signup_address');
-  let d_addr = document.getElementById('signup_detailAddress');
-  let birth = document.getElementById('signup_userBirth');
-
-  // 비밀번호 확인
-    if (pw.value !== pw2.value) {
-      alert('비밀번호가 일치하지 않습니다.');
-      pw2Input.focus();
-      return;
-    }
-
-    // 주소 조합
-    const fullAddress = addr.value.trim() + d_addr.value.trim();
-    console.log('최종 저장될 주소: ',fullAddress);
-
-    // 서버로 보낼 데이터 객체 생성
-    let body_id = id.value;
-    let body_pw = pw.value;
-    let body_name = name.value;
-    let body_addr = fullAddress;
-    let body_birth = birth.value;
-
-  fetch('http://localhost:3000/signup', {
-    method:'post', //post방식은 data가 body? header에 담겨서 전달된다, 
-    headers:{ 'Content-Type':'application/json;charset=utf-8' }, // json으로넘겨줄거고, 한글쓸꺼다.
-    body: JSON.stringify({body_id, body_pw, body_name, body_addr, body_birth})
-  })
-  .then(response => response.json()) // 서버의 응답결과
-  .then(result => {
-    console.log('result is: ',result);
-    
-    alert(`회원 가입성공: ${name.value}, 이제 로그인해주세요.`);
-    closePopup();
   })
   .catch(err => console.log(err));
 });

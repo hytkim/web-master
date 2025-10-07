@@ -65,15 +65,8 @@
       <section id="find-id">
         <h2>아이디 찾기</h2>
         <form action="/find-id" method="post">
-          <label>이름:<input id="id_search_name" type="text" name="userName" required /></label>
-          <label>주소:</label>
-          <div style="display: flex; align-items: center; margin-bottom: 0.5rem;">
-            <input type="text" name="postcode" id="id_serch_postcode" placeholder="우편번호" readonly style="flex-grow: 1;">
-            <button type="button" onclick="execDaumPostcode_id()" style="flex-shrink: 0; margin-left: 5px; padding: 0.8rem;">주소 검색</button>
-          </div>
-          <input type="text" name="address" id="id_searchaddress" placeholder="주소" readonly style="margin-bottom: 0.5rem;">
-          <input type="text" name="detailAddress" id="id_searchdetailAddress" placeholder="상세주소까지 정확하게 입력" required>
-          <input type="hidden" name="extraAddress" id="id_searchextraAddress">
+          <label>이름:<input type="text" name="userName" required /></label>
+          <label>주소:<input type="text" name="userAddress" required /></label>
           <button type="submit" class="submit">아이디 찾기</button>
         </form>
         <div class="message" id="find-id-msg"></div>
@@ -82,15 +75,8 @@
       <section id="find-pw">
         <h2>비밀번호 찾기</h2>
         <form action="/find-pw" method="post">
-          <label>아이디:<input id="pw_search_id" type="text" name="userId" required /></label>
-          <label>주소:</label>
-          <div style="display: flex; align-items: center; margin-bottom: 0.5rem;">
-            <input type="text" name="postcode" id="pw_search_postcode" placeholder="우편번호" readonly style="flex-grow: 1;">
-            <button type="button" onclick="execDaumPostcode_pw()" style="flex-shrink: 0; margin-left: 5px; padding: 0.8rem;">주소 검색</button>
-          </div>
-          <input type="text" name="address" id="pw_searchaddress" placeholder="주소" readonly style="margin-bottom: 0.5rem;">
-          <input type="text" name="detailAddress" id="pw_searchdetailAddress" placeholder="상세주소까지 정확하게 입력">
-          <input type="hidden" name="extraAddress" id="pw_searchextraAddress">
+          <label>아이디:<input type="text" name="userId" required /></label>
+          <label>주소:<input type="text" name="userAddress" required /></label>
           <button type="submit" class="submit">비밀번호 찾기</button>
         </form>
         <div class="message" id="find-pw-msg"></div>
@@ -99,10 +85,9 @@
       <section id="signup">
         <h2>회원가입</h2>
         <form action="/signup" method="post" name="signupForm">
-          <label>아이디:<input id="signup_id" type="text" name="userId" required /></label>
-          <label>비밀번호:<input id="signup_pw" type="password" name="userPw" required /></label>
-          <label>비밀번호 확인:<input id="signup_pw2" type="password" name="userPw2" required /></label>
-          <label>이름:<input id="signup_name" type="text" name="userName" required /></label>
+          <label>아이디:<input type="text" name="userId" required /></label>
+          <label>비밀번호:<input type="password" name="userPw" required /></label>
+          <label>이름:<input type="text" name="userName" required /></label>
           
           <label>주소:</label>
           <div style="display: flex; align-items: center; margin-bottom: 0.5rem;">
@@ -112,7 +97,7 @@
           <input type="text" name="address" id="signup_address" placeholder="주소" readonly style="margin-bottom: 0.5rem;">
           <input type="text" name="detailAddress" id="signup_detailAddress" placeholder="상세주소">
           <input type="hidden" name="extraAddress" id="signup_extraAddress">
-          <label style="margin-top: 1rem;">생년월일:<input id="signup_userBirth" type="date" name="userBirth" required /></label>
+          <label style="margin-top: 1rem;">생년월일:<input type="date" name="userBirth" /></label>
           <button type="submit" class="submit">가입하기</button>
         </form>
       </section>
