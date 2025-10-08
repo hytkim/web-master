@@ -1,4 +1,4 @@
-/* board.css - 리뷰 게시판 전용 스타일 */
+/* board.css - 리뷰 게시판/거래내역 전용 스타일 */
 
 .board-main {
     width: 100%;
@@ -13,11 +13,14 @@
     margin-bottom: 40px;
 }
 
-.board-list {
+/* ==================================
+   공통 리스트 스타일
+================================== */
+.board-list, .history-list {
     border-top: 2px solid #333;
 }
 
-.board-header {
+.board-header, .history-header {
     display: flex;
     justify-content: space-between;
     padding: 15px 10px;
@@ -26,37 +29,36 @@
     border-bottom: 1px solid #ddd;
 }
 
-.board-col-title {
-    flex-basis: 60%;
-    text-align: center;
-}
-.board-col-author {
-    flex-basis: 20%;
-    text-align: center;
-}
-.board-col-date {
-    flex-basis: 20%;
-    text-align: center;
-}
-
-.post-list {
+.post-list, .purchase-list {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-.post-item {
+.post-item, .history-item {
     display: flex;
     align-items: center;
     padding: 15px 10px;
     border-bottom: 1px solid #eee;
 }
 
-.post-col-title {
-    flex-basis: 60%;
-    display: flex;
-    align-items: center;
+.no-history {
+    text-align: center;
+    padding: 50px;
+    color: #777;
+    border-bottom: 1px solid #eee;
 }
+
+/* ==================================
+   리뷰 게시판 컬럼
+================================== */
+.board-header .board-col-title { flex-basis: 60%; text-align: center; }
+.board-header .board-col-author { flex-basis: 20%; text-align: center; }
+.board-header .board-col-date { flex-basis: 20%; text-align: center; }
+
+.post-item .post-col-title { flex-basis: 60%; display: flex; align-items: center; }
+.post-item .post-col-author { flex-basis: 20%; text-align: center; color: #555; }
+.post-item .post-col-date { flex-basis: 20%; text-align: center; color: #555; }
 
 .post-thumbnail {
     width: 60px;
@@ -85,59 +87,35 @@
     color: #777;
 }
 
-.lock-icon {
-    display: inline-block;
-    margin-right: 5px;
-}
+/* ==================================
+   거래 내역 조회 컬럼
+================================== */
+.history-header .history-col-no { flex-basis: 10%; text-align: center; }
+.history-header .history-col-item { flex-basis: 35%; text-align: center; }
+.history-header .history-col-details { flex-basis: 30%; text-align: center; }
+.history-header .history-col-address { flex-basis: 25%; text-align: center; }
 
-.new-tag {
-    font-size: 0.7rem;
-    color: red;
-    font-weight: bold;
-    margin-left: 5px;
-}
+.history-item .history-col-no { flex-basis: 10%; text-align: center; color: #555; }
+.history-item .history-col-item { flex-basis: 35%; display: flex; align-items: center; gap: 15px; text-align: left; }
+.history-item .history-col-details { flex-basis: 30%; display: flex; flex-direction: column; gap: 5px; font-size: 0.9rem; text-align: left; }
+.history-item .history-col-address { flex-basis: 25%; text-align: left; font-size: 0.9rem; color: #555; line-height: 1.4; }
 
-.post-col-author {
-    flex-basis: 20%;
-    text-align: center;
-    color: #555;
-}
-
-.post-col-date {
-    flex-basis: 20%;
-    text-align: center;
-    color: #555;
-}
-
-.pagination {
-    display: flex;
-    justify-content: center;
-    margin: 40px 0;
-}
-
-.pagination a {
-    color: #333;
-    text-decoration: none;
-    padding: 8px 12px;
-    margin: 0 4px;
-    border: 1px solid #ddd;
+.history-col-item img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    border: 1px solid #eee;
     border-radius: 4px;
 }
 
-.pagination a.active {
-    background-color: #009879; /* 이미지의 청록색과 유사하게 */
-    color: white;
-    border-color: #009879;
-}
-
-.pagination a:hover {
-    background-color: #f0f0f0;
-}
-
+/* ==================================
+   검색창
+================================== */
 .search-bar {
     display: flex;
     justify-content: center;
     gap: 10px;
+    margin-top: 40px;
 }
 
 .search-bar select,

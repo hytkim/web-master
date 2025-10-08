@@ -18,8 +18,8 @@
             <ul class="menu-left">
               <li><a href="index.html#best" id="best-tab">베스트</a></li>
               <li><a href="index.html#search" id="search-tab">상품 조회</a></li>
-              <li><a href="board.html">리뷰 게시판</a></li>
-              <li id="transaction-history-menu" style="display: none;"><a href="#">거래내역 조회</a></li>
+              <li><a href="board.html#reviews">리뷰 게시판</a></li>
+              <li id="transaction-history-menu" style="display: none;"><a href="board.html#history">거래내역 조회</a></li>
             </ul>
             <div class="menu-right" id="auth-menu">
               <a href="#" id="open-login">로그인</a>
@@ -170,5 +170,53 @@
 
     <script src="item.js" defer></script>
     <script src="project.js" defer></script>
+
+    <!-- Purchase Confirmation Popup -->
+    <div class="popup-wrapper" id="purchase-popup-wrapper">
+        <div class="popup" id="purchase-popup">
+            <span class="close-btn" id="purchase-close-btn">&times;</span>
+            <h2>구매 확인</h2>
+            <div class="purchase-summary">
+                <img src="" alt="상품 이미지" id="purchase-item-image">
+                <div class="purchase-info">
+                    <p id="purchase-item-name"></p>
+                    <p>수량: <span id="purchase-quantity"></span>개</p>
+                </div>
+            </div>
+            <div class="purchase-details">
+                <div class="detail-row">
+                    <span>총 상품 금액</span>
+                    <span id="purchase-total-price"></span>
+                </div>
+                <div class="detail-row">
+                    <span>보유 포인트</span>
+                    <span id="purchase-user-points"></span>
+                </div>
+                <div class="detail-row points-used-row">
+                    <span>사용 포인트</span>
+                    <span id="purchase-points-used"></span>
+                </div>
+                <div class="detail-row address-row">
+                    <label for="purchase-address">배송지</label>
+                    <div class="address-inputs">
+                        <div class="postcode-wrapper">
+                            <input type="text" id="purchase-postcode" placeholder="우편번호" readonly>
+                            <button type="button" id="purchase-postcode-btn">주소 검색</button>
+                        </div>
+                        <input type="text" id="purchase-address" placeholder="주소" readonly>
+                        <input type="text" id="purchase-detailAddress" placeholder="상세주소">
+                    </div>
+                </div>
+                <div class="detail-row final-payment">
+                    <span>최종 결제 금액</span>
+                    <span id="purchase-final-price"></span>
+                </div>
+            </div>
+            <div class="purchase-actions">
+                <button class="cancel-btn" id="purchase-cancel-btn">취소</button>
+                <button class="confirm-btn" id="purchase-confirm-btn">결제하기</button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

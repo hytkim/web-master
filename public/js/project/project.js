@@ -145,22 +145,30 @@ document.addEventListener('DOMContentLoaded', () => {
         const currentPath = window.location.pathname.split('/').pop();
         const hash = window.location.hash;
 
+        // 1. 비-메인 페이지의 네비게이션 강조 처리
         if (currentPath.startsWith('board.html')) {
-            const boardLink = document.querySelector('a[href="board.html"]');
-            if(boardLink) setActiveNav(boardLink);
-            return;
+            if (hash === '#history') {
+                const historyLink = document.querySelector('a[href="board.html#history"]');
+                if(historyLink) setActiveNav(historyLink);
+            } else { // #reviews 또는 해시 없음
+                const reviewLink = document.querySelector('a[href="board.html#reviews"]');
+                if(reviewLink) setActiveNav(reviewLink);
+            }
+            return; 
         } 
         if (currentPath.startsWith('item.html')) {
             setActiveNav(null);
             return;
         }
 
+        // 2. 메인 페이지(index.html)의 초기 탭 설정 및 콘텐츠 로드
         if (hash === '#search' && searchTab) {
             searchTab.click();
         } else { 
             if (bestTab) {
                 bestTab.click();
             } else {
+                // 예외 상황: bestTab이 없으면 기본 상품 로드
                 fetchAndRenderProducts();
             }
         }
@@ -170,7 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ======== 3. 로그인, 팝업, 세션 관리 함수 ======== 
     // ======================================================
 
-    const showUserInfo = (userData) => {
+    const showUserInfo = (userData, dispatchEvent = false) => {
         authMenu.style.display = 'none';
         userNameEl.textContent = userData.USER_NAME + '님';
         userIdEl.textContent = `(${userData.USER_ID})`;
@@ -178,6 +186,9 @@ document.addEventListener('DOMContentLoaded', () => {
         userMenu.classList.add('active');
         transactionHistoryMenu.style.display = 'list-item';
         sessionStorage.setItem('loginTime', new Date().getTime());
+        if (dispatchEvent) {
+            document.dispatchEvent(new CustomEvent('authChange', { detail: { loggedIn: true, user: userData } }));
+        }
         closePopup();
     };
 
@@ -194,12 +205,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (usernameInput) usernameInput.value = '';
         const passwordInput = document.querySelector('#password');
         if (passwordInput) passwordInput.value = '';
+        document.dispatchEvent(new CustomEvent('authChange', { detail: { loggedIn: false } })); // Dispatch event
     };
 
     const checkLoginState = () => {
         const storedUser = sessionStorage.getItem('user');
         if (storedUser) {
-            showUserInfo(JSON.parse(storedUser));
+            showUserInfo(JSON.parse(storedUser), false); // 이벤트 발생 안 함
         }
     };
 
@@ -312,6 +324,7 @@ document.addEventListener('DOMContentLoaded', () => {
     checkLoginState();
     initSessionTimeoutChecker();
     initializePage();
+    window.addEventListener('hashchange', initializePage);
 
     // ======================================================
     // ======== 5. Form 제출 이벤트 처리 (로그인 등) ======== 
@@ -333,7 +346,7 @@ document.addEventListener('DOMContentLoaded', () => {
               if (result.success && result.user_result.length > 0) {
                 const userData = result.user_result[0];
                 sessionStorage.setItem('user', JSON.stringify(userData));
-                showUserInfo(userData);
+                showUserInfo(userData, true); // 이벤트 발생시킴
               } else {
                 alert(result.message || '아이디 또는 비밀번호가 일치하지 않습니다.');
               }
@@ -476,6 +489,17 @@ function execDaumPostcode_pw() {
             document.getElementById('pw_search_postcode').value = data.zonecode;
             document.getElementById("pw_searchaddress").value = addr;
             document.getElementById("pw_searchdetailAddress").focus();
+        }
+    }).open();
+}
+
+function execDaumPostcode_purchase() {
+    new daum.Postcode({
+        oncomplete: function(data) {
+            var addr = (data.userSelectedType === 'R') ? data.roadAddress : data.jibunAddress;
+            document.getElementById('purchase-postcode').value = data.zonecode;
+            document.getElementById("purchase-address").value = addr;
+            document.getElementById("purchase-detailAddress").focus();
         }
     }).open();
 }
