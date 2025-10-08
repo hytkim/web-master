@@ -6,13 +6,35 @@
     <title>상품 상세 - yedam store</title>
     <link href="project.css" rel="stylesheet">
     <link href="item.css" rel="stylesheet">
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </head>
 <body>
     <div id="container">
         <header>
-            <div class="logo-container">
-                <a href="index.html"> <img src="logo.png" alt="Yedam Store 로고"> </a>
+          <div class="logo-container">
+            <a href="index.html" id="logo-link"> <img src="logo.png" alt="Yedam Store 로고"> </a>
+          </div>
+          <nav>
+            <ul class="menu-left">
+              <li><a href="index.html#best" id="best-tab">베스트</a></li>
+              <li><a href="index.html#search" id="search-tab">상품 조회</a></li>
+              <li><a href="board.html">리뷰 게시판</a></li>
+              <li id="transaction-history-menu" style="display: none;"><a href="#">거래내역 조회</a></li>
+            </ul>
+            <div class="menu-right" id="auth-menu">
+              <a href="#" id="open-login">로그인</a>
+              <span class="divider">/</span>
+              <a href="#" id="open-signup">회원가입</a>
             </div>
+            <div class="user-wrapper" id="user-menu">
+              <div class="user-info">
+                <span class="user-name" id="user-name"></span>
+                <span class="user-id" id="user-id"></span>
+                <span class="user-point" id="user-point"></span>
+              </div>
+              <button class="logout-btn" id="logout-btn">로그아웃</button>
+            </div>
+          </nav>
         </header>
 
         <main class="item-main">
@@ -59,7 +81,94 @@
             </div>
         </main>
     </div>
-    <!-- <script src="project.js" defer></script> -->
+
+    <div class="popup-wrapper">
+      <div class="popup">
+        <span class="close-btn">&times;</span>
+        <img src="logo.png" style="display: block; margin: 0 auto 20px; height: 100px;">
+        
+        <nav>
+          <button data-target="login" class="active">로그인</button>
+          <button data-target="find-id">아이디 찾기</button>
+          <button data-target="find-pw">비밀번호 찾기</button>
+          <button data-target="signup">회원가입</button>
+        </nav>
+
+        <section id="login" class="active">
+          <h2>로그인</h2>
+          <form action="/login" method="post" name=" login">
+            <label>아이디:<input type="text" name="username" id="username" required /></label>
+            <label>비밀번호:<input type="password" name="password" id="password" required /></label>
+            <button type="submit" class="submit">로그인</button>
+          </form>
+        </section>
+
+        <section id="find-id">
+          <h2>아이디 찾기</h2>
+          <form action="/find-id" method="post">
+            <label>이름:<input id="id_search_name" type="text" name="userName" required /></label>
+            <label>주소:</label>
+            <div style="display: flex; align-items: center; margin-bottom: 0.5rem;">
+              <input type="text" name="postcode" id="id_serch_postcode" placeholder="우편번호" readonly style="flex-grow: 1;">
+              <button type="button" onclick="execDaumPostcode_id()" style="flex-shrink: 0; margin-left: 5px; padding: 0.8rem;">주소 검색</button>
+            </div>
+            <input type="text" name="address" id="id_searchaddress" placeholder="주소" readonly style="margin-bottom: 0.5rem;">
+            <input type="text" name="detailAddress" id="id_searchdetailAddress" placeholder="상세주소까지 정확하게 입력" required>
+            <input type="hidden" name="extraAddress" id="id_searchextraAddress">
+            <button type="submit" class="submit">아이디 찾기</button>
+          </form>
+          <div class="message" id="find-id-msg"></div>
+        </section>
+
+        <section id="find-pw">
+          <h2>비밀번호 찾기</h2>
+          <form action="/find-pw" method="post">
+            <label>아이디:<input id="pw_search_id" type="text" name="userId" required /></label>
+            <label>주소:</label>
+            <div style="display: flex; align-items: center; margin-bottom: 0.5rem;">
+              <input type="text" name="postcode" id="pw_search_postcode" placeholder="우편번호" readonly style="flex-grow: 1;">
+              <button type="button" onclick="execDaumPostcode_pw()" style="flex-shrink: 0; margin-left: 5px; padding: 0.8rem;">주소 검색</button>
+            </div>
+            <input type="text" name="address" id="pw_searchaddress" placeholder="주소" readonly style="margin-bottom: 0.5rem;">
+            <input type="text" name="detailAddress" id="pw_searchdetailAddress" placeholder="상세주소까지 정확하게 입력">
+            <input type="hidden" name="extraAddress" id="pw_searchextraAddress">
+            <button type="submit" class="submit">비밀번호 찾기</button>
+          </form>
+          <div class="message" id="find-pw-msg"></div>
+        </section>
+        
+        <section id="signup">
+          <h2>회원가입</h2>
+          <form action="/signup" method="post" name="signupForm">
+            <label>아이디:<input id="signup_id" type="text" name="userId" required /></label>
+            <label>비밀번호:<input id="signup_pw" type="password" name="userPw" required /></label>
+            <label>비밀번호 확인:<input id="signup_pw2" type="password" name="userPw2" required /></label>
+            <label>이름:<input id="signup_name" type="text" name="userName" required /></label>
+            
+            <label>주소:</label>
+            <div style="display: flex; align-items: center; margin-bottom: 0.5rem;">
+              <input type="text" name="postcode" id="signup_postcode" placeholder="우편번호" readonly style="flex-grow: 1;">
+              <button type="button" onclick="execDaumPostcode()" style="flex-shrink: 0; margin-left: 5px; padding: 0.8rem;">주소 검색</button>
+            </div>
+            <input type="text" name="address" id="signup_address" placeholder="주소" readonly style="margin-bottom: 0.5rem;">
+            <input type="text" name="detailAddress" id="signup_detailAddress" placeholder="상세주소">
+            <input type="hidden" name="extraAddress" id="signup_extraAddress">
+            <label style="margin-top: 1rem;">생년월일:<input id="signup_userBirth" type="date" name="userBirth" required /></label>
+            <button type="submit" class="submit">가입하기</button>
+          </form>
+        </section>
+
+        <section id="session-timeout">
+          <h2>세션 만료</h2>
+          <p>장시간 활동이 없어 안전을 위해 자동으로 로그아웃되었습니다.</p>
+          <p>다시 로그인해주세요.</p>
+          <button type="button" class="submit" id="session-ok-btn">확인</button>
+        </section>
+
+      </div>
+    </div>
+
     <script src="item.js" defer></script>
+    <script src="project.js" defer></script>
 </body>
 </html>

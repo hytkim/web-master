@@ -13,14 +13,14 @@
   <div id="container">
     <header>
       <div class="logo-container">
-        <a href="/"> <img src="logo.png" alt="Yedam Store 로고"> </a>
+        <a href="/" id="logo-link"> <img src="logo.png" alt="Yedam Store 로고"> </a>
       </div>
       <nav>
         <ul class="menu-left">
-          <li><a href="#">베스트</a></li>
-          <li><a href="#">상품 조회</a></li>
+          <li><a href="#" id="best-tab">베스트</a></li>
+          <li><a href="#" id="search-tab">상품 조회</a></li>
           <li><a href="board.html">리뷰 게시판</a></li>
-          <li><a href="#">거래내역 조회</a></li>
+          <li id="transaction-history-menu"><a href="#">거래내역 조회</a></li>
         </ul>
         <div class="menu-right" id="auth-menu">
           <a href="#" id="open-login">로그인</a>
@@ -31,12 +31,21 @@
           <div class="user-info">
             <span class="user-name" id="user-name"></span>
             <span class="user-id" id="user-id"></span>
+            <span class="user-point" id="user-point"></span>
           </div>
           <button class="logout-btn" id="logout-btn">로그아웃</button>
         </div>
       </nav>
     </header>
     <main>
+      <div id="product-search-bar" class="search-bar" style="display: none;">
+        <select id="product-search-type">
+          <option value="name">상품명</option>
+          <option value="tag">태그</option>
+        </select>
+        <input type="text" id="product-search-keyword" placeholder="검색어를 입력하세요">
+        <button type="submit" id="product-search-btn">검색</button>
+      </div>
       <div class="card-container"></div>
     </main>
   </div>
@@ -115,6 +124,13 @@
           <label style="margin-top: 1rem;">생년월일:<input id="signup_userBirth" type="date" name="userBirth" required /></label>
           <button type="submit" class="submit">가입하기</button>
         </form>
+      </section>
+
+      <section id="session-timeout">
+        <h2>세션 만료</h2>
+        <p>장시간 활동이 없어 안전을 위해 자동으로 로그아웃되었습니다.</p>
+        <p>다시 로그인해주세요.</p>
+        <button type="button" class="submit" id="session-ok-btn">확인</button>
       </section>
 
     </div>

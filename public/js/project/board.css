@@ -61,7 +61,7 @@
 .post-thumbnail {
     width: 60px;
     height: 60px;
-    object-fit: cover;
+    object-fit: contain;
     margin-right: 20px;
 }
 
