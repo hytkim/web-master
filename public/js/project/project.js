@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 팝업 및 로그인 관련 ---
     const popupWrapper = document.querySelector('.popup-wrapper');
-    const popup = document.querySelector('.popup'); // 팝업창 자체
+    const popup = document.getElementById('main-popup'); // 팝업창 자체
     const openLoginBtn = document.getElementById('open-login');
     const openSignupBtn = document.getElementById('open-signup');
     const closeBtn = document.querySelector('.close-btn');
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const img = document.createElement('img');
         img.className = 'image';
-        img.src = item.HISTORY_ITEM_IMAGE || 'logo.png';
+        img.src = item.ITEMS_IMAGE || 'logo.png';
         img.alt = item.ITEMS_NAME;
 
         const cardContent = document.createElement('div');
@@ -185,6 +185,13 @@ document.addEventListener('DOMContentLoaded', () => {
         userPointEl.textContent = `P: ${userData.USER_POINT.toLocaleString()}`;
         userMenu.classList.add('active');
         transactionHistoryMenu.style.display = 'list-item';
+
+        // 관리자 UI 표시
+        const addProductMenu = document.getElementById('add-product-menu');
+        if (addProductMenu && userData.USER_ACCESS === 1) {
+            addProductMenu.style.display = 'list-item';
+        }
+
         sessionStorage.setItem('loginTime', new Date().getTime());
         if (dispatchEvent) {
             document.dispatchEvent(new CustomEvent('authChange', { detail: { loggedIn: true, user: userData } }));
@@ -201,6 +208,13 @@ document.addEventListener('DOMContentLoaded', () => {
         userIdEl.textContent = '';
         userPointEl.textContent = '';
         transactionHistoryMenu.style.display = 'none';
+
+        // 관리자 UI 숨기기
+        const addProductMenu = document.getElementById('add-product-menu');
+        if (addProductMenu) {
+            addProductMenu.style.display = 'none';
+        }
+
         const usernameInput = document.querySelector('#username');
         if (usernameInput) usernameInput.value = '';
         const passwordInput = document.querySelector('#password');
@@ -222,7 +236,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const closePopup = () => {
         popupWrapper.classList.remove('active');
-        if (popup) popup.classList.remove('session-mode'); // 세션 모드 클래스 제거
+        if (popup) {
+            popup.classList.remove('session-mode'); // 세션 모드 클래스 제거
+            popup.classList.remove('add-product-mode'); // 상품 추가 모드 클래스 제거
+        }
         setActivePopupTab('login'); 
         const formsInPopup = document.querySelectorAll('.popup form');
         formsInPopup.forEach(form => form.reset());
@@ -231,6 +248,12 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const setActivePopupTab = (targetId) => {
+        // Clear content of all forms and messages in the popup before switching
+        const formsInPopup = document.querySelectorAll('.popup form');
+        formsInPopup.forEach(form => form.reset());
+        const messageElements = document.querySelectorAll('.popup .message');
+        messageElements.forEach(msg => msg.innerHTML = '');
+
         popupNavButtons.forEach(navBtn => navBtn.classList.toggle('active', navBtn.dataset.target === targetId));
         popupSections.forEach(sec => sec.classList.toggle('active', sec.id === targetId));
     };
@@ -321,6 +344,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     logoutBtn.addEventListener('click', handleLogout);
 
+    const addProductMenu = document.getElementById('add-product-menu');
+    if (addProductMenu) {
+        addProductMenu.addEventListener('click', (e) => {
+            e.preventDefault();
+            popup.classList.add('add-product-mode'); // 모드 클래스 추가
+            openPopup('add-product');
+        });
+    }
+
     checkLoginState();
     initSessionTimeoutChecker();
     initializePage();
@@ -330,11 +362,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // ======== 5. Form 제출 이벤트 처리 (로그인 등) ======== 
     // ======================================================
     
-    if (document.forms.length > 0) {
-        if(document.forms[0]) document.forms[0].addEventListener('submit', (e) => {
+    // --- Login Form ---
+    const loginForm = document.forms.loginForm;
+    if(loginForm) {
+        loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            let id = document.querySelector('#username').value;
-            let pw = document.querySelector('#password').value;
+            let id = loginForm.elements.username.value;
+            let pw = loginForm.elements.password.value;
             
             fetch('http://localhost:3000/login', {
               method:'post',
@@ -353,11 +387,15 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .catch(err => console.log(err));
         });
-          
-        if(document.forms[1]) document.forms[1].addEventListener('submit', (e)=> {
+    }
+
+    // --- Find ID Form ---
+    const findIdForm = document.forms.findIdForm;
+    if(findIdForm) {
+        findIdForm.addEventListener('submit', (e)=> {
             e.preventDefault();
-            let user_name = document.getElementById('id_search_name').value;
-            let user_address = document.getElementById('id_searchaddress').value.trim()+ document.getElementById('id_searchdetailAddress').value.trim();
+            let user_name = findIdForm.elements.userName.value;
+            let user_address = findIdForm.elements.address.value.trim() + findIdForm.elements.detailAddress.value.trim();
             fetch('http://localhost:3000/searchId', {
               method:'post',
               headers:{ 'Content-Type':'application/json;charset=utf-8' },
@@ -375,11 +413,15 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .catch(err => console.log(err));
         });
-          
-        if(document.forms[2]) document.forms[2].addEventListener('submit', (e)=> {
+    }
+
+    // --- Find PW Form ---
+    const findPwForm = document.forms.findPwForm;
+    if(findPwForm) {
+        findPwForm.addEventListener('submit', (e)=> {
             e.preventDefault();
-            let user_id = document.getElementById('pw_search_id').value;
-            let user_address = document.getElementById('pw_searchaddress').value.trim()+ document.getElementById('pw_searchdetailAddress').value.trim();
+            let user_id = findPwForm.elements.userId.value;
+            let user_address = findPwForm.elements.address.value.trim() + findPwForm.elements.detailAddress.value.trim();
             fetch('http://localhost:3000/searchPw', {
               method:'post',
               headers:{ 'Content-Type':'application/json;charset=utf-8' },
@@ -397,16 +439,20 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .catch(err => console.log(err));
         });
-          
-        if(document.forms[3]) document.forms[3].addEventListener('submit', (e)=> {
+    }
+
+    // --- Signup Form ---
+    const signupForm = document.forms.signupForm;
+    if(signupForm) {
+        signupForm.addEventListener('submit', (e)=> {
             e.preventDefault();
-            let id = document.getElementById('signup_id');
-            let pw = document.getElementById('signup_pw');
-            let pw2 = document.getElementById('signup_pw2');
-            let name = document.getElementById('signup_name');
-            let addr = document.getElementById('signup_address');
-            let d_addr = document.getElementById('signup_detailAddress');
-            let birth = document.getElementById('signup_userBirth');
+            let id = signupForm.elements.userId;
+            let pw = signupForm.elements.userPw;
+            let pw2 = signupForm.elements.userPw2;
+            let name = signupForm.elements.userName;
+            let addr = signupForm.elements.address;
+            let d_addr = signupForm.elements.detailAddress;
+            let birth = signupForm.elements.userBirth;
           
             if (pw.value !== pw2.value) {
               alert('비밀번호가 일치하지 않습니다.');
@@ -437,6 +483,46 @@ document.addEventListener('DOMContentLoaded', () => {
               }
             })
             .catch(err => console.log(err));
+        });
+    }
+
+    // --- Add Product Form ---
+    const addProductForm = document.forms.addProductForm;
+    if (addProductForm) {
+        addProductForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const formData = new FormData(addProductForm);
+            const productData = Object.fromEntries(formData.entries());
+            
+            // Add logged in user's ID
+            const loggedInUser = JSON.parse(sessionStorage.getItem('user'));
+            if (!loggedInUser) {
+                alert('오류: 로그인 정보가 없습니다. 다시 로그인해주세요.');
+                return;
+            }
+            productData.user_id = loggedInUser.USER_ID;
+            
+            productData.items_price = Number(productData.items_price);
+
+            fetch('http://localhost:3000/products', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(productData)
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    alert('상품이 성공적으로 등록되었습니다.');
+                    closePopup();
+                    fetchAndRenderProducts({ mode: 'all' });
+                } else {
+                    throw new Error(result.message || '상품 등록에 실패했습니다.');
+                }
+            })
+            .catch(error => {
+                console.error('Error adding product:', error);
+                alert(error.message);
+            });
         });
     }
 });

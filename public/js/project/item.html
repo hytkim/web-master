@@ -18,6 +18,7 @@
             <ul class="menu-left">
               <li><a href="index.html#best" id="best-tab">베스트</a></li>
               <li><a href="index.html#search" id="search-tab">상품 조회</a></li>
+              <li id="add-product-menu" class="admin-only" style="display: none;"><a href="#">상품 추가</a></li>
               <li><a href="board.html#reviews">리뷰 게시판</a></li>
               <li id="transaction-history-menu" style="display: none;"><a href="board.html#history">거래내역 조회</a></li>
             </ul>
@@ -83,7 +84,7 @@
     </div>
 
     <div class="popup-wrapper">
-      <div class="popup">
+      <div class="popup" id="main-popup">
         <span class="close-btn">&times;</span>
         <img src="logo.png" style="display: block; margin: 0 auto 20px; height: 100px;">
         
@@ -96,7 +97,7 @@
 
         <section id="login" class="active">
           <h2>로그인</h2>
-          <form action="/login" method="post" name=" login">
+          <form name="loginForm">
             <label>아이디:<input type="text" name="username" id="username" required /></label>
             <label>비밀번호:<input type="password" name="password" id="password" required /></label>
             <button type="submit" class="submit">로그인</button>
@@ -105,7 +106,7 @@
 
         <section id="find-id">
           <h2>아이디 찾기</h2>
-          <form action="/find-id" method="post">
+          <form name="findIdForm">
             <label>이름:<input id="id_search_name" type="text" name="userName" required /></label>
             <label>주소:</label>
             <div style="display: flex; align-items: center; margin-bottom: 0.5rem;">
@@ -122,7 +123,7 @@
 
         <section id="find-pw">
           <h2>비밀번호 찾기</h2>
-          <form action="/find-pw" method="post">
+          <form name="findPwForm">
             <label>아이디:<input id="pw_search_id" type="text" name="userId" required /></label>
             <label>주소:</label>
             <div style="display: flex; align-items: center; margin-bottom: 0.5rem;">
@@ -156,10 +157,21 @@
             <label style="margin-top: 1rem;">생년월일:<input id="signup_userBirth" type="date" name="userBirth" required /></label>
             <button type="submit" class="submit">가입하기</button>
           </form>
-        </section>
-
-        <section id="session-timeout">
-          <h2>세션 만료</h2>
+              </section>
+        
+              <section id="add-product">
+                <h2>새 상품 추가</h2>
+                <form name="addProductForm">
+                  <label>상품명:<input type="text" name="items_name" required /></label>
+                  <label>가격:<input type="number" name="items_price" required /></label>
+                  <label>카테고리:<input type="text" name="items_category" placeholder="예: 과일, 채소" required /></label>
+                  <label>이미지 URL:<input type="text" name="items_image" placeholder="https://example.com/image.png" /></label>
+                  <label>상세정보:<textarea name="items_info" rows="4"></textarea></label>
+                  <button type="submit" class="submit">상품 등록</button>
+                </form>
+              </section>
+        
+              <section id="session-timeout">          <h2>세션 만료</h2>
           <p>장시간 활동이 없어 안전을 위해 자동으로 로그아웃되었습니다.</p>
           <p>다시 로그인해주세요.</p>
           <button type="button" class="submit" id="session-ok-btn">확인</button>

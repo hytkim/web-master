@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentItem = null;
     let quantity = 1;
     let loggedInUser = JSON.parse(sessionStorage.getItem('user'));
+    let pointsToUse = 0;
 
     // --- DOM Elements ---
     const mainContent = document.querySelector('.item-main');
@@ -128,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const totalPrice = finalPriceValue * quantity;
         const userPoints = loggedInUser.USER_POINT || 0;
 
-        const pointsToUse = Math.min(totalPrice, userPoints);
+        pointsToUse = Math.min(totalPrice, userPoints);
         const finalPayment = totalPrice - pointsToUse;
 
         document.getElementById('purchase-item-image').src = currentItem.ITEMS_IMAGE || 'logo.png';
@@ -185,8 +186,16 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .then(response => response.json())
         .then(result => {
-            if (result.success) {
+            if (result.success && result.updatedUser) {
                 alert('구매가 완료되었습니다!');
+                
+                // 1. sessionStorage와 전역 변수 업데이트
+                sessionStorage.setItem('user', JSON.stringify(result.updatedUser));
+                loggedInUser = result.updatedUser;
+
+                // 2. UI 갱신을 위해 authChange 이벤트 발생 (project.js에서 감지하여 처리)
+                document.dispatchEvent(new CustomEvent('authChange'));
+                
                 hidePurchasePopup();
             } else {
                 throw new Error(result.message || '구매 처리 중 오류가 발생했습니다.');
