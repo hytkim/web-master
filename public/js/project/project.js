@@ -19,7 +19,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const popup = document.getElementById('main-popup'); // 팝업창 자체
     const openLoginBtn = document.getElementById('open-login');
     const openSignupBtn = document.getElementById('open-signup');
-    const closeBtn = document.querySelector('.close-btn');
+    // const closeBtn = document.querySelector('.close-btn');
+    const closeBtn = document.querySelector('#main-popup .close-btn'); 
+
     const logoLink = document.getElementById('logo-link');
     const popupNavButtons = document.querySelectorAll('.popup nav button');
     const popupSections = document.querySelectorAll('.popup section');
@@ -57,6 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     cardContainer.innerHTML = '<p class="no-results">해당 상품이 없습니다.</p>';
                 }
                 items.forEach(item => {
+                    // console.log('item is: ',item);
                     const cardElement = MakeRow(item);
                     cardContainer.appendChild(cardElement);
                 });

@@ -141,7 +141,8 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // 주소 필드 초기화 및 기본값 설정
         document.getElementById('purchase-postcode').value = '';
-        document.getElementById('purchase-address').value = loggedInUser.USER_ADDRESS || '';
+        // document.getElementById('purchase-address').value = loggedInUser.USER_ADDRESS || '';
+        document.getElementById('purchase-address').value = '';
         document.getElementById('purchase-detailAddress').value = '';
 
         document.getElementById('purchase-final-price').textContent = `${finalPayment.toLocaleString()}원`;
