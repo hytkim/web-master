@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Data Fetching ---
-    fetch(`http://localhost:3000/item`, {
+    fetch(`http://192.168.0.15:3000/item`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ item_no: itemNo })
@@ -180,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
             points_used: pointsToUse // 사용 포인트 추가
         };
 
-        fetch('http://localhost:3000/purchase', {
+        fetch('http://192.168.0.15:3000/purchase', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(purchaseData)
@@ -210,7 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Review and Comment Functions ---
     function fetchAndRenderReviews(itemNo) {
-        fetch(`http://localhost:3000/reviews/${itemNo}`)
+        fetch(`http://192.168.0.15:3000/reviews/${itemNo}`)
             .then(response => response.json())
             .then(reviews => {
                 reviewsContainer.innerHTML = '';
@@ -279,7 +279,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function fetchAndRenderComments(boardNo, container) {
-        fetch(`http://localhost:3000/comments/list`, {
+        fetch(`http://192.168.0.15:3000/comments/list`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ board_no: boardNo })
@@ -329,7 +329,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        fetch('http://localhost:3000/comments', {
+        fetch('http://192.168.0.15:3000/comments', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -367,7 +367,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        fetch('http://localhost:3000/comments', {
+        fetch('http://192.168.0.15:3000/comments', {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

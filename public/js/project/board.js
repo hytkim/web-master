@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // --- Functions ---
     async function fetchAndPopulateCategories() {
         try {
-            const response = await fetch('http://localhost:3000/categories');
+            const response = await fetch('http://192.168.0.15:3000/categories');
             const data = await response.json();
             if (data.success) {
                 availableCategories = data.categories;
@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         boardList.innerHTML = `<ul class="post-list"><li>리뷰를 불러오는 중...</li></ul>`;
 
-        let url = new URL('http://localhost:3000/board');
+        let url = new URL('http://192.168.0.15:3000/board');
         if (searchType && keyword) {
             url.searchParams.set('searchType', searchType);
             url.searchParams.set('keyword', keyword);
@@ -241,7 +241,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // 관리자(user_access === 1) 여부에 따라 다른 API 호출
         const isAdmin = loggedInUser && loggedInUser.USER_ACCESS === 1;
-        const url = `http://localhost:3000/history/${isAdmin ? 'all' : 'user'}`;
+        const url = `http://192.168.0.15:3000/history/${isAdmin ? 'all' : 'user'}`;
         const fetchOptions = {
             method: isAdmin ? 'GET' : 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -307,7 +307,7 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        fetch('http://localhost:3000/board', {
+        fetch('http://192.168.0.15:3000/board', {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -387,7 +387,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
             reviewData.user_id = loggedInUser.USER_ID;
 
-            fetch('http://localhost:3000/board', {
+            fetch('http://192.168.0.15:3000/board', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(reviewData)

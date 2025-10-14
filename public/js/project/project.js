@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const { mode = 'best', category = null, keyword = null, searchType = 'name' } = options;
         if (!cardContainer) return;
         
-        let url = new URL('http://localhost:3000/history');
+        let url = new URL('http://192.168.0.15:3000/history');
         if (mode) url.searchParams.set('mode', mode);
         if (category) url.searchParams.set('category', category);
         if (keyword) {
@@ -274,7 +274,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const initSessionTimeoutChecker = () => {
-        const MAX_SESSION_TIME = 5 * 60 * 1000;
+        const MAX_SESSION_TIME = 60*1000;//5 * 60 * 1000;
         setInterval(() => {
             const storedUser = sessionStorage.getItem('user');
             if (storedUser) {
@@ -373,7 +373,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let id = loginForm.elements.username.value;
             let pw = loginForm.elements.password.value;
             
-            fetch('http://localhost:3000/login', {
+            fetch('http://192.168.0.15:3000/login', {
               method:'post',
               headers:{ 'Content-Type':'application/json;charset=utf-8' },
               body: JSON.stringify({id, pw})
@@ -399,7 +399,7 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             let user_name = findIdForm.elements.userName.value;
             let user_address = findIdForm.elements.address.value.trim() + findIdForm.elements.detailAddress.value.trim();
-            fetch('http://localhost:3000/searchId', {
+            fetch('http://192.168.0.15:3000/searchId', {
               method:'post',
               headers:{ 'Content-Type':'application/json;charset=utf-8' },
               body: JSON.stringify({user_name, user_address})
@@ -425,7 +425,7 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             let user_id = findPwForm.elements.userId.value;
             let user_address = findPwForm.elements.address.value.trim() + findPwForm.elements.detailAddress.value.trim();
-            fetch('http://localhost:3000/searchPw', {
+            fetch('http://192.168.0.15:3000/searchPw', {
               method:'post',
               headers:{ 'Content-Type':'application/json;charset=utf-8' },
               body: JSON.stringify({user_id, user_address})
@@ -465,7 +465,7 @@ document.addEventListener('DOMContentLoaded', () => {
           
             const fullAddress = addr.value.trim() + d_addr.value.trim();
             
-            fetch('http://localhost:3000/signup', {
+            fetch('http://192.168.0.15:3000/signup', {
               method:'post',
               headers:{ 'Content-Type':'application/json;charset=utf-8' },
               body: JSON.stringify({
@@ -507,7 +507,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             productData.items_price = Number(productData.items_price);
 
-            fetch('http://localhost:3000/products', {
+            fetch('http://192.168.0.15:3000/products', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(productData)
